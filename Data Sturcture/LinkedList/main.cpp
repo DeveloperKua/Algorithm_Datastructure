@@ -11,6 +11,12 @@ list<int> sl_int;
 list<float> sl_float;
 list<char> sl_char;
 
+
+void input(const char * outputString, int * inputID) {
+	puts(outputString);
+	scanf_s("%d", inputID);
+}
+
 int main()
 {
 	ml_int.push_back(1);
@@ -28,4 +34,8 @@ int main()
 
 	//sl_int.insert(iterInsertPos, 1);
 	
+
+	int a = 0;
+	input("값을 입력", &a);
+	printf("%d", a);
 }

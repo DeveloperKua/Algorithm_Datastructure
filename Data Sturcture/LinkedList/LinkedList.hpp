@@ -173,14 +173,14 @@ void LinkedList<T>::insert(int index, T insert_data)
 	Node<T>* insertIndexNode = SearchNode(index);//현재 추가할 위치의 기존 노드
 
 	//만약 노드가 퍼스트 또는 라스트 노드라면 기존 push 코드 이용
-	if (first == insertNode) { push_front(insert_data); }
-	else if (last == insertNode) { push_back(insert_data); }
+	if (first == insertIndexNode) { push_front(insert_data); }
+	else if (last == insertIndexNode) { push_back(insert_data); }
 	else
 	{
 		Node<T> * insertNode = new Node<T>(insertIndexNode->getPrev() , insertIndexNode, insert_data);//새로 추가해줄 새 노드
 	}
 
-	++count
+	++count;
 }
 
 template<typename T>
