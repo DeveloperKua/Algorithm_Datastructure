@@ -13,16 +13,19 @@ list<char> sl_char;
 
 int main()
 {
-	std::cout << "Hello World!\n";
+	ml_int.push_back(1);
+	ml_int.push_back(2);
+	ml_int.push_back(3);
+	ml_int.push_back(4);
+	ml_int.push_back(5);
+	ml_int.push_back(6);
+	//cout << ml_int.front();
+	//list<int>::iterator iterInsertPos = sl_int.begin();
 
-	sl_int.push_front;
-	sl_int.push_back;
-	sl_int.pop_front;
-	sl_int.pop_back;
-	sl_int.erase();
-	sl_int.clear;
-	sl_int.front;
-	sl_int.back;
-	sl_int.size;
+	//sl_int.push_back(1);
+	//sl_int.push_back(2);
+	//sl_int.push_back(3);
 
+	//sl_int.insert(iterInsertPos, 1);
+	
 }

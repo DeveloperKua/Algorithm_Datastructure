@@ -9,12 +9,12 @@ using namespace std;
 
 template <typename T>
 class Node {
-	friend LinkedList;
 private:
 	T data;
 	Node<T> *next;
 	Node<T> *prev;
 public:
+	Node(T _data);
 	Node(Node<T>* _prev, Node* _next, T _data);
 	~Node();
 public:
@@ -48,8 +48,9 @@ public:
 	void push_back(T push_data);
 	void pop_front();
 	void pop_back();
-	void erase();
-	void insert();
+	void erase(int index);
+	void insert(int index, T insert_data);
+	Node<T>* SearchNode(int index);
 	void clear();
 
 };

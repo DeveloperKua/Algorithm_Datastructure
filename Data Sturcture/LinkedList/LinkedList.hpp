@@ -1,6 +1,15 @@
+#include "LinkedList.h"
 #pragma once
 
 #pragma region NodeCode
+template<typename T>
+Node<T>::Node(T _data)
+{
+	prev = nullptr;
+	next = nullptr;
+	data = _data;
+}
+
 template<typename T>
 Node<T>::Node(Node<T>* _prev, Node * _next, T _data)
 {
@@ -19,7 +28,7 @@ Node<T>::~Node()
 
 template<typename T>
 T Node<T>::getData() const
-{ return data(); }
+{ return data; }
 
 template<typename T>
 Node<T>* Node<T>::getPrev() const
@@ -53,7 +62,7 @@ template<typename T>
 LinkedList<T>::LinkedList()
 {
 	count = 0;
-	filst = nullptr;
+	first = nullptr;
 	last = nullptr;
 }
 
@@ -72,52 +81,134 @@ int LinkedList<T>::size() const
 template<typename T>
 int LinkedList<T>::front() const
 {
-	return 0;
+	if (count == 0) {
+		cout << "List is Null";
+		return 0;
+	}
+	return first->getData();
 }
 
 template<typename T>
 int LinkedList<T>::back() const
 {
-	return 0;
+	if (count == 0) {
+		cout << "List is Null";
+		return 0;
+	}
+	return last->getData();
 }
 
 template<typename T>
 void LinkedList<T>::push_front(T push_data)
 {
+	if (count == 0) {//리스트가 없다면
+		Node<T> * newNode = new Node<T>(push_data);
+		first = last = newNode;
+		++count;
+		return;
+	}
+	Node<T> * newNode = new Node<T>(nullptr, first, push_data);
+	first->setPrev(newNode);
+	first = newNode;
+	++count;
 }
 
 template<typename T>
 void LinkedList<T>::push_back(T push_data)
 {
+	if (count == 0) {//리스트가 없다면
+		Node<T> * newNode = new Node<T>(push_data);
+		first = last = newNode;
+		++count;
+		return;
+	}
+	Node<T> * newNode = new Node<T>(last, nullptr, push_data);
+	last->setNext(newNode);
+	last = newNode;
+	++count;
 }
 
 template<typename T>
 void LinkedList<T>::pop_front()
 {
+	if (count == 0) return;
+	Node<T>* TempNode = first;
+
+	first = first->getNext();
+	if(first != nullptr) first->setPrev(nullptr);
+	delete TempNode;
+	--count;
 }
 
 template<typename T>
 void LinkedList<T>::pop_back()
 {
+	if (count == 0) return;
+	Node<T>* TempNode = last;
+
+	last = last->getPrev();
+	if (last != nullptr) last->setNext(nullptr);
+	delete TempNode;
+	--count;
 }
 
 template<typename T>
-void LinkedList<T>::erase()
+void LinkedList<T>::erase(int index)
 {
+	Node<T>* eraseNode = SearchNode(index);
+
+	if (first == eraseNode) { pop_front(); }
+	else if (last == eraseNode) { pop_back(); }
+	else
+	{
+		eraseNode->getPrev()->setNext(eraseNode->getNext());
+		eraseNode->getNext()->setPrev(eraseNode->getPrev());
+	}
+	--count;
 }
 
 template<typename T>
-void LinkedList<T>::insert()
+void LinkedList<T>::insert(int index, T insert_data)
 {
+	Node<T>* insertIndexNode = SearchNode(index);//현재 추가할 위치의 기존 노드
+
+	//만약 노드가 퍼스트 또는 라스트 노드라면 기존 push 코드 이용
+	if (first == insertNode) { push_front(insert_data); }
+	else if (last == insertNode) { push_back(insert_data); }
+	else
+	{
+		Node<T> * insertNode = new Node<T>(insertIndexNode->getPrev() , insertIndexNode, insert_data);//새로 추가해줄 새 노드
+	}
+
+	++count
+}
+
+template<typename T>
+Node<T>* LinkedList<T>::SearchNode(int index)
+{
+	int searchCount = 0;
+	Node<T>* Temp = first;
+	if (index < count / 2) {
+		while (searchCount != index) {
+			Temp = Temp->getNext();
+			++searchCount;
+		}
+		return Temp;
+	}
+	else {
+		searchCount = count - 1;
+		Temp = last;
+		while (searchCount != index) {
+			Temp = Temp->getPrev();
+			--searchCount;
+		}
+		return Temp;
+	}
+	return Temp;
 }
 
 template<typename T>
 void LinkedList<T>::clear()
-{
-}
-
-template<typename T>
-void LinkedList<T>::push_back(T push_data)
 {
 }
 #pragma endregion
