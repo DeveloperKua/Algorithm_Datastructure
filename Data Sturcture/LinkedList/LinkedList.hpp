@@ -75,7 +75,7 @@ LinkedList<T>::~LinkedList()
 template<typename T>
 int LinkedList<T>::size() const
 {
-	return data;
+	return count;
 }
 
 template<typename T>
@@ -155,32 +155,31 @@ void LinkedList<T>::pop_back()
 template<typename T>
 void LinkedList<T>::erase(int index)
 {
-	Node<T>* eraseNode = SearchNode(index);
-
-	if (first == eraseNode) { pop_front(); }
-	else if (last == eraseNode) { pop_back(); }
+	if (index == 0) { pop_front(); }
+	else if (index == count - 1) { pop_back(); }
 	else
 	{
+		Node<T>* eraseNode = SearchNode(index);
 		eraseNode->getPrev()->setNext(eraseNode->getNext());
 		eraseNode->getNext()->setPrev(eraseNode->getPrev());
+		--count;
 	}
-	--count;
 }
 
 template<typename T>
 void LinkedList<T>::insert(int index, T insert_data)
 {
-	Node<T>* insertIndexNode = SearchNode(index);//현재 추가할 위치의 기존 노드
-
-	//만약 노드가 퍼스트 또는 라스트 노드라면 기존 push 코드 이용
-	if (first == insertIndexNode) { push_front(insert_data); }
-	else if (last == insertIndexNode) { push_back(insert_data); }
+	//insert 위치가 양 끝 이라면 push 이용
+	if (index == 0) { push_front(insert_data); }
+	else if (index == count) { push_back(insert_data); }
 	else
 	{
+		Node<T>* insertIndexNode = SearchNode(index);//현재 추가할 위치의 기존 노드
 		Node<T> * insertNode = new Node<T>(insertIndexNode->getPrev() , insertIndexNode, insert_data);//새로 추가해줄 새 노드
+		insertIndexNode->getPrev()->setNext(insertNode);
+		insertIndexNode->setPrev(insertNode);
+		++count;
 	}
-
-	++count;
 }
 
 template<typename T>
@@ -210,5 +209,8 @@ Node<T>* LinkedList<T>::SearchNode(int index)
 template<typename T>
 void LinkedList<T>::clear()
 {
+	while (count != 0) {
+		pop_back();
+	}
 }
 #pragma endregion

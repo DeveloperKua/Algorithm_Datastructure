@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Gen-Maze Binary Tree.cpp">
+    <ClCompile Include="MazeGenerator.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="MazeGenerator.cpp">
+    <ClCompile Include="Gen-Maze.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
