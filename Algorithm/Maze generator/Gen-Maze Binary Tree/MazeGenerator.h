@@ -1,13 +1,17 @@
-#ifndef __MAZEGENERATOR_H
-#define __MAZEGENERATOR_H
-
-#include <iostream>
-#include <conio.h>
+#pragma once
 #include <Windows.h>
+#include <conio.h> 
+
+#include <stack>
+#include <iostream>
 #include <string>
+#include <chrono>
+#include <vector>
 #include <list>
 #include <random>
 #include <ctime>
+
+using namespace std;
 
 #define BLACK 0 
 #define BLUE 1 
@@ -26,8 +30,6 @@
 #define YELLOW 14 
 #define WHITE 15 
 
-using namespace std;
-
 const int WAIT_TICK = 1000 / 30;
   
 #pragma once
@@ -38,6 +40,8 @@ private:
 		NONE,
 		WALL,
 		PLAYER,
+		GOAL,
+		GOALED_PLAYER
 	};
 
 	enum MoveDirection
@@ -52,6 +56,11 @@ private:
 
 	int playerX = 1;
 	int playerY = 1;
+
+	int goalX = 0;
+	int goalY = 0;
+
+	bool isGoaled = false;
 public:
 	TileInfo **tile;;
 
@@ -63,8 +72,10 @@ public:
 	void Render();
 	void Update();
 
+	void default_Maze();
 	void MazeGenerator_BinaryTree();
 	void MazeGenerator_SideWinder();
+	void MazeGenerator_RecursiveBacktracking();
 
 	int GetRandom(int min, int max) {
 		random_device ranDevice;
@@ -79,9 +90,13 @@ public:
 		case Maze::NONE:
 			return LIGHTBLUE;
 		case Maze::WALL:
-			return RED;
+			return RED;		
 		case Maze::PLAYER:
 			return CYAN;
+		case Maze::GOAL:
+			return LIGHTGREEN;
+		case Maze::GOALED_PLAYER:
+			return LIGHTCYAN;
 		default:
 			return WHITE;
 		}
@@ -96,6 +111,10 @@ public:
 			return "¡á";
 		case Maze::PLAYER:
 			return "¡Ý";
+		case Maze::GOAL:
+			return "¡Ú";
+		case Maze::GOALED_PLAYER:
+			return "¡Ü";
 		default:
 			return "\0";
 		}
@@ -124,5 +143,3 @@ public:
 	}
 };
 
-
-#endif //!__MAZEGENERATOR_H

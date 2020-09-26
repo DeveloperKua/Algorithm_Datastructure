@@ -4,47 +4,50 @@ CONSOLE_CURSOR_INFO cusorInfo;
 COORD pos;
 
 
-Maze::Maze()
+cMaze::cMaze()
 {
-	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	cusorInfo.bVisible = false;
-	cusorInfo.dwSize = 1;
-
-	SetConsoleCursorInfo(hConsole, &cusorInfo);
 	
-	pos = { 0,0 };
 }
 
-Maze::~Maze()
+cMaze::~cMaze()
 {
-	for (int i = 0; i < TileHeight; ++i) {
-		delete[] tile[i];
+	for (int i = 0; i < mMazeHeight; ++i) {
+		delete[] Maze[i];
 	}
-	delete[] tile;
+	delete[] Maze;
 }
 
-void Maze::Initialize(int width, int height)
+void cMaze::Initialize(int width, int height)
 {
-	TileWidth = width;
-	TileHeight = height;
-	goalY = TileHeight - 2;
-	goalX = TileWidth - 2;
+	mMazeWidth = WIDTH / gTileSize;
+	mMazeHeight = HEIGHT / gTileSize;
 
-
-	tile = new TileInfo*[TileHeight];
-	for (int i = 0; i < TileHeight; ++i) {
-		tile[i] = new TileInfo[TileWidth];
-		memset(tile[i], 0, sizeof(int) * TileWidth);
+	Maze = new cTile*[mMazeHeight];
+	for (int i = 0; i < mMazeHeight; ++i) {
+		Maze[i] = new cTile[mMazeWidth];
+		memset(Maze[i], 0, sizeof(int) * mMazeWidth);
 	}
-	MazeGenerator_BinaryTree();
+
+	for (int y = 0; y < TileHeight; y++)
+	{
+		for (int x = 0; x < TileWidth; x++)
+		{
+			Maze[y][x].x = x;
+			Maze[y][x].y = y;
+			Maze[y][x].bIsWallOpen[0] = true;
+			Maze[y][x].bIsWallOpen[1] = true;
+			Maze[y][x].bIsWallOpen[2] = true;
+			Maze[y][x].bIsWallOpen[3] = true;
+		}
+	}
+
+	//MazeGenerator_BinaryTree();
 	//MazeGenerator_SideWinder();
-	MazeGenerator_RecursiveBacktracking();
+	//MazeGenerator_RecursiveBacktracking();
 	//default_Maze();
-	tile[goalY][goalX] = GOAL;
-
 }
 
-void Maze::Render()
+void cMaze::Render()
 {
 	SetConsoleCursorPosition(hConsole, pos);
 	SetConsoleTextAttribute(hConsole, 12);
@@ -61,14 +64,14 @@ void Maze::Render()
 	}
 }
 
-void Maze::Update()
+void cMaze::Update()
 {
 	MoveKeyInput();
 	//MovePlayer(GetRandom(0, 4));
 	//Sleep(100);
 }
 
-void Maze::default_Maze()
+void cMaze::default_Maze()
 {
 	for (int y = 0; y < TileHeight; y++)
 	{
@@ -79,7 +82,7 @@ void Maze::default_Maze()
 	}
 }
 
-void Maze::MazeGenerator_BinaryTree()
+void cMaze::MazeGenerator_BinaryTree()
 {
 	for (int y = 0; y < TileHeight; y++)
 	{
@@ -119,7 +122,7 @@ void Maze::MazeGenerator_BinaryTree()
 	//}
 }
 
-void Maze::MazeGenerator_SideWinder()
+void cMaze::MazeGenerator_SideWinder()
 {
 	for (int y = 0; y < TileHeight; y++)
 	{
@@ -164,7 +167,7 @@ void Maze::MazeGenerator_SideWinder()
 	}
 }
 
-void Maze::MazeGenerator_RecursiveBacktracking()
+void cMaze::MazeGenerator_RecursiveBacktracking()
 {
 	for (int y = 0; y < TileHeight; y++)
 	{
@@ -178,7 +181,7 @@ void Maze::MazeGenerator_RecursiveBacktracking()
 	}
 }
 
-void Maze::MovePlayer(int moveDir)
+void cMaze::MovePlayer(int moveDir)
 {
 	int moveX = 0;
 	int moveY = 0;

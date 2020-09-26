@@ -3,7 +3,7 @@
 int main()
 {
 	Maze maze;
-	maze.Initialize(25,25);
+	maze.Initialize(21,21);
 
 	int lastTick = 0;
 	while (true) {
@@ -15,5 +15,6 @@ int main()
 	#pragma endregion
 		maze.Render();
 		maze.Update();
+		
 	}
 }
