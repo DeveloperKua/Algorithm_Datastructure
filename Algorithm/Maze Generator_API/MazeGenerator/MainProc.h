@@ -10,4 +10,3 @@ int OnMouseLButton(HWND hWnd, WPARAM wParam, LPARAM lParam);
 int OnDestroy(HWND hWnd, WPARAM wParam, LPARAM lParam);
 
 void Run();
-

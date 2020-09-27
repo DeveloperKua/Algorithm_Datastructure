@@ -82,82 +82,65 @@ void cMaze::MazeGenerator_BinaryTree(HDC hdc)
 {
 	if (bIsCompleteGenerated) return;
 
-	static DWORD time;
 
-	if (GetTickCount() - time >= 50) {
-
-		for (int y = 0; y < mMazeHeight; y++)
+	for (int y = 0; y < mMazeHeight; y++)
+	{
+		for (int x = 0; x < mMazeWidth; x++)
 		{
-			for (int x = 0; x < mMazeWidth; x++)
-			{
-				if (y == mMazeHeight - 1 && x == mMazeWidth - 1)
-					continue;
-				if (y == mMazeHeight - 1) {
-					OpenWall(RIGHT, x, y);
-					continue;
-				}
-
-				if (x == mMazeWidth - 1) {
-					OpenWall(BOTTOM, x, y);
-					continue;
-				}
-
-				if (GetRandom(0, 2) == 0)
-					OpenWall(RIGHT, x, y);
-				else
-					OpenWall(BOTTOM, x, y);
-
-				Render(hdc);
+			if (y == mMazeHeight - 1 && x == mMazeWidth - 1)
+				continue;
+			if (y == mMazeHeight - 1) {
+				OpenWall(RIGHT, x, y);
+				continue;
 			}
+
+			if (x == mMazeWidth - 1) {
+				OpenWall(BOTTOM, x, y);
+				continue;
+			}
+
+			if (GetRandom(0, 2) == 0)
+				OpenWall(RIGHT, x, y);
+			else
+				OpenWall(BOTTOM, x, y);
 		}
 	}
-	time = GetTickCount();
-	Render(hdc);
-
 
 	bIsCompleteGenerated = true;
 }
 
 void cMaze::MazeGenerator_SideWinder(HDC hdc)
 {
+	if (bIsCompleteGenerated) return;
+
 	for (int y = 0; y < mMazeHeight; y++)
 	{
+		int count = 1;
 		for (int x = 0; x < mMazeWidth; x++)
 		{
-			//Maze[y][x].drawLine(hdc);
+			if (y == mMazeHeight - 1 && x == mMazeWidth - 1)
+				continue;
+			if (y == mMazeHeight - 1) {
+				OpenWall(RIGHT, x, y);
+				continue;
+			}
+
+			if (x == mMazeWidth - 1) {
+				OpenWall(BOTTOM, x, y);
+				continue;
+			}
+
+			if (GetRandom(0, 2) == 0) {
+				OpenWall(RIGHT, x, y);
+				++count;
+			}
+			else {
+				int RandomX = GetRandom(0, count);
+				OpenWall(BOTTOM, x - RandomX * 2, y);
+				count = 1;
+			}
 		}
 	}
-
-	//for (int y = 0; y < TileHeight; y++)
-	//{
-	//	int count = 1;
-	//	for (int x = 0; x < TileWidth; x++)
-	//	{
-	//		if (x % 2 == 0 || y % 2 == 0)
-	//			continue;
-	//		if (y == TileHeight - 2 && x == TileWidth - 2)
-	//			continue;
-	//		if (y == TileHeight - 2) {
-	//			tile[y][x + 1] = NONE;
-	//			continue;
-	//		}
-
-	//		if (x == TileWidth - 2) {
-	//			tile[y + 1][x] = NONE;
-	//			continue;
-	//		}
-
-	//		if (GetRandom(0, 2) == 0) {
-	//			tile[y][x + 1] = NONE;
-	//			++count;
-	//		}
-	//		else {
-	//			int RandomX = GetRandom(0, count);
-	//			tile[y + 1][x - RandomX * 2] = NONE;
-	//			count = 1;
-	//		}
-	//	}
-	//}
 	bIsCompleteGenerated = true;
 
 }

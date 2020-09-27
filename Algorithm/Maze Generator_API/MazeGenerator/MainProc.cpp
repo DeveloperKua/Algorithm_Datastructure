@@ -12,10 +12,13 @@ POINT ptMouse;
 int nFPS;
 int nCount;
 
+int TimeCount;
+
 cMaze * myMaze = new cMaze();
 
 int OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 {
+
 	Buffer = CreateImageBuffer(hWnd);
 	bIsActive = true;
 	SetTimer(hWnd, 0, 1000, NULL);
@@ -27,6 +30,9 @@ int OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 
 int OnTimer(HWND hWnd, WPARAM wParam, LPARAM lParam)
 {
+
+	TimeCount++;
+
 	nFPS = nCount;
 	nCount = 0;
 
@@ -49,6 +55,7 @@ int OnDestroy(HWND hWnd, WPARAM wParam, LPARAM lParam)
 
 	DeleteImageBuffer(Buffer);
 
+	KillTimer(hWnd, 0);
 	PostQuitMessage(0);
 
 	return 1;
@@ -61,7 +68,8 @@ void Run()
 
 	ClearScreen(Buffer, RGB(255, 255, 255));
 
-	myMaze->MazeGenerator_BinaryTree(Buffer->hdcBack);
+	//myMaze->MazeGenerator_BinaryTree(Buffer->hdcBack);
+	myMaze->MazeGenerator_SideWinder(Buffer->hdcBack);
 	myMaze->Render(Buffer->hdcBack);
 	
 	SwapBuffer(Buffer);
