@@ -13,43 +13,18 @@
 
 #include "../System.h"
 
-
 using namespace std;
 
-const int gTileSize = 40;
-
-#pragma once
-class cMaze {
-
-	int mMazeWidth;
-	int mMazeHeight;
-
-public:
-	friend cTile;
-	cTile **Maze;
-
-public:
-	cMaze();
-	~cMaze();
-
-	void Initialize(int width, int height);
-	void Render();
-	void Update();
-
-	void default_Maze();
-	void MazeGenerator_BinaryTree();
-	void MazeGenerator_SideWinder();
-	void MazeGenerator_RecursiveBacktracking();
-
-	int GetRandom(int min, int max) {
-		random_device ranDevice;
-		mt19937 gen(ranDevice());
-		uniform_int_distribution<int> dis(min, max - 1);
-
-		return (int)dis(gen);
-	}
+enum DIRECTION
+{
+	TOP = 0,
+	BOTTOM,
+	LEFT,
+	RIGHT,
 };
 
+
+const int gTileSize = 40;
 
 class cTile {
 public:
@@ -72,7 +47,7 @@ public:
 
 		/*
 	(drawX,drawY)        (drawX + gTileSize ,drawY)
-	      Ｋ							 Ｉ
+		  Ｋ							 Ｉ
 			忙式式式式式式式式式式式式式式式式式式式式式式式忖
 			弛						弛
 			弛					    弛
@@ -105,3 +80,59 @@ public:
 		LineTo(hdc, endX, endY);
 	}
 };
+
+class cMaze {
+
+private:
+	int mMazeWidth;
+	int mMazeHeight;
+
+public:
+	cTile **Maze;
+	bool bIsCompleteGenerated = false;
+
+public:
+	cMaze();
+	~cMaze();
+
+	void Initialize();
+	void Render(HDC hdc);
+	void Update();
+
+	void default_Maze(HDC hdc);
+	void MazeGenerator_BinaryTree(HDC hdc);
+	void MazeGenerator_SideWinder(HDC hdc);
+	void MazeGenerator_RecursiveBacktracking(HDC hdc);
+
+	int GetRandom(int min, int max) {
+		random_device ranDevice;
+		mt19937 gen(ranDevice());
+		uniform_int_distribution<int> dis(min, max - 1);
+
+		return (int)dis(gen);
+	}
+
+	void OpenWall(const int index, int x, int y) {
+
+		switch (index)
+		{
+		case TOP:
+			Maze[y][x].bIsWallOpen[0] = false;
+			Maze[y - 1][x].bIsWallOpen[2] = false;
+			break;
+		case BOTTOM:
+			Maze[y][x].bIsWallOpen[2] = false;
+			Maze[y + 1][x].bIsWallOpen[0] = false;
+			break;
+		case RIGHT:
+			Maze[y][x].bIsWallOpen[1] = false;
+			Maze[y][x + 1].bIsWallOpen[3] = false;
+			break;
+		case LEFT:
+			Maze[y][x].bIsWallOpen[3] = false;
+			Maze[y][x - 1].bIsWallOpen[1] = false;
+			break;
+		}
+	}
+};
+

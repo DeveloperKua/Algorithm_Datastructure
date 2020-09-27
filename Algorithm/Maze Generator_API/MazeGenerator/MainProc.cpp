@@ -1,6 +1,7 @@
 #include "MainProc.h"
 #include "System.h"
 #include "imgBuffer.h"
+#include "maze Source/MazeGenerator.h"
 #include <stdio.h>
 
 extern BOOL bIsActive;
@@ -11,6 +12,7 @@ POINT ptMouse;
 int nFPS;
 int nCount;
 
+cMaze * myMaze = new cMaze();
 
 int OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 {
@@ -18,29 +20,9 @@ int OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	bIsActive = true;
 	SetTimer(hWnd, 0, 1000, NULL);
 
+	myMaze->Initialize();
+
 	return 1;
-}
-
-int OnPaint(HWND hWnd, WPARAM wParam, LPARAM lParam)
-{
-	HDC	hdc;
-	PAINTSTRUCT	ps;
-
-	char strBuffer[1024];
-	hdc = BeginPaint(hWnd, &ps);
-
-
-	for (int y = 0; y < TileHeight; y++)
-	{
-		for (int x = 0; x < TileWidth; x++)
-		{
-			grid[y][x].drawLine(hdc);
-		}
-	}
-
-	EndPaint(hWnd, &ps);
-
-	return 0;
 }
 
 int OnTimer(HWND hWnd, WPARAM wParam, LPARAM lParam)
@@ -79,14 +61,9 @@ void Run()
 
 	ClearScreen(Buffer, RGB(255, 255, 255));
 
-	for (int y = 0; y < TileHeight; y++)
-	{
-		for (int x = 0; x < TileWidth; x++)
-		{
-			grid[y][x].drawLine(Buffer->hdcBack);
-		}
-	}
-
+	myMaze->MazeGenerator_BinaryTree(Buffer->hdcBack);
+	myMaze->Render(Buffer->hdcBack);
+	
 	SwapBuffer(Buffer);
 
 	nCount++;

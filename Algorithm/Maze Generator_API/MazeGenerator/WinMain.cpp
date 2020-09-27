@@ -14,8 +14,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 		return OnCreate(hWnd, wParam, lParam);
 
-	case WM_PAINT:
-		return OnPaint(hWnd, wParam, lParam);
+	case WM_TIMER:
+		return OnTimer(hWnd, wParam, lParam);
+
+	case WM_LBUTTONDOWN:
+		return OnMouseLButton(hWnd, wParam, lParam);
 
 	case WM_CLOSE:
 	case WM_DESTROY:
