@@ -115,30 +115,27 @@ void cMaze::MazeGenerator_SideWinder(HDC hdc)
 
 	for (int y = 0; y < mMazeHeight; y++)
 	{
-		int count = 1;
+		int count = 0;
 		for (int x = 0; x < mMazeWidth; x++)
 		{
-			if (y == mMazeHeight - 1 && x == mMazeWidth - 1)
-				continue;
-			if (y == mMazeHeight - 1) {
+		/*	if (y == mMazeHeight - 1 && x == mMazeWidth - 1)
+				continue;*/
+			if (y == 0) {
+				if(x == mMazeWidth - 1) continue;
 				OpenWall(RIGHT, x, y);
 				continue;
 			}
 
-			if (x == mMazeWidth - 1) {
-				OpenWall(BOTTOM, x, y);
-				continue;
+			if (GetRandom(0, 1) == 0 || x + 1 == mMazeWidth) {
+				int RandomX = GetRandom(x - count, x);
+				count = 0;
+				OpenWall(TOP, RandomX, y);
 			}
-
-			if (GetRandom(0, 2) == 0) {
+			else if(x + 1 < mMazeWidth){
 				OpenWall(RIGHT, x, y);
 				++count;
 			}
-			else {
-				int RandomX = GetRandom(0, count);
-				OpenWall(BOTTOM, x - RandomX * 2, y);
-				count = 1;
-			}
+
 		}
 	}
 	bIsCompleteGenerated = true;

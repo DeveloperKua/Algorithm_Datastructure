@@ -107,7 +107,7 @@ public:
 	int GetRandom(int min, int max) {
 		random_device ranDevice;
 		mt19937 gen(ranDevice());
-		uniform_int_distribution<int> dis(min, max - 1);
+		uniform_int_distribution<int> dis(min, max);
 
 		return (int)dis(gen);
 	}
