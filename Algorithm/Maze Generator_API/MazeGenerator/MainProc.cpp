@@ -16,23 +16,21 @@ int TimeCount;
 
 cMaze * myMaze = new cMaze();
 
+
 int OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 {
-
 	Buffer = CreateImageBuffer(hWnd);
 	bIsActive = true;
-	SetTimer(hWnd, 0, 1000, NULL);
+	//myMaze->Render(Buffer->hdcBack);
 
 	myMaze->Initialize();
+	SetTimer(hWnd, 0, 500, NULL);
 
 	return 1;
 }
 
 int OnTimer(HWND hWnd, WPARAM wParam, LPARAM lParam)
 {
-
-	TimeCount++;
-
 	nFPS = nCount;
 	nCount = 0;
 
@@ -54,7 +52,6 @@ int OnDestroy(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	bIsActive = false;
 
 	DeleteImageBuffer(Buffer);
-
 	KillTimer(hWnd, 0);
 	PostQuitMessage(0);
 
@@ -76,5 +73,6 @@ void Run()
 
 	nCount++;
 
-	Sleep(1000 / 66);
+	Sleep(1000/66);
 }
+

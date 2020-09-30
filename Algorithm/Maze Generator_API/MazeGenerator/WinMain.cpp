@@ -36,5 +36,8 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int 
 
 	g_hWnd = WinCreate(TEXT, TEXT, hInst, WS_OVERLAPPEDWINDOW, rtSystemSize);
 
+	//MsgLoop();
+
+	//return 0;
 	return GameLoop();
 }

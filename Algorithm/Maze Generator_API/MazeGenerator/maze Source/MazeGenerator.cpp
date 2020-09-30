@@ -49,7 +49,6 @@ void cMaze::Initialize()
 
 void cMaze::Render(HDC hdc)
 {
-
 	for (int y = 0; y < mMazeHeight; y++)
 	{
 		for (int x = 0; x < mMazeWidth; x++)
@@ -73,7 +72,7 @@ void cMaze::default_Maze(HDC hdc)
 	{
 		for (int x = 0; x < mMazeWidth; x++)
 		{
-			Maze[y][x].drawLine(hdc);
+			Maze[y][x].drawLine(hdc); 
 		}
 	}
 }
@@ -81,7 +80,6 @@ void cMaze::default_Maze(HDC hdc)
 void cMaze::MazeGenerator_BinaryTree(HDC hdc)
 {
 	if (bIsCompleteGenerated) return;
-
 
 	for (int y = 0; y < mMazeHeight; y++)
 	{
@@ -135,7 +133,7 @@ void cMaze::MazeGenerator_SideWinder(HDC hdc)
 				OpenWall(RIGHT, x, y);
 				++count;
 			}
-
+			this->Render(hdc);
 		}
 	}
 	bIsCompleteGenerated = true;
