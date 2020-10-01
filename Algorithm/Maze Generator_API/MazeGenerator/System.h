@@ -1,13 +1,22 @@
 #pragma once
-#include <windows.h>
 
-#define	WIDTH	800
-#define	HEIGHT	800
+class CSystem : public CSingleton<CSystem>,
+	public CBaseWindow,
+	public CTimeManager
 
-BOOL WinInit(LPCWSTR pWinName);
+{
+public:
+	cMaze* myMaze;
 
-HWND WinCreate(LPCWSTR pClassName, LPCWSTR pWindowName, HINSTANCE hInst, int nWindowStyle, RECT rtWindowSize);
+public:
+	CSystem(void);
+	virtual ~CSystem(void);
 
-VOID MsgLoop();
+	bool Initialize(void);
+	void Update(void);
+	void Terminate(void);
+	void Run(void);
+};
 
-int GameLoop();
+#define WIDTH  800;
+#define HEIGHT  800;

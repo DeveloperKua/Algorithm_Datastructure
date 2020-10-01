@@ -151,27 +151,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BaseWindow.h" />
-    <ClInclude Include="Gdi.h" />
+    <ClInclude Include="ImgBuffer.h" />
     <ClInclude Include="MainProc.h" />
     <ClInclude Include="maze Source\MazeGenerator.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="Singleton.h" />
-    <ClInclude Include="stdafx.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="TimeManager.h" />
-    <ClInclude Include="WndGameBase.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BaseWindow.cpp" />
-    <ClCompile Include="Gdi.cpp" />
+    <ClCompile Include="ImgBuffer.cpp" />
     <ClCompile Include="MainProc.cpp" />
     <ClCompile Include="maze Source\MazeGenerator.cpp" />
-    <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="System.cpp" />
-    <ClCompile Include="TimeManager.cpp" />
-    <ClCompile Include="WndGameBase.cpp" />
+    <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MazeGenerator.rc" />

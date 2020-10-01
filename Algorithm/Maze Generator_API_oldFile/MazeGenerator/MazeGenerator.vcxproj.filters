@@ -30,52 +30,28 @@
     <ClInclude Include="targetver.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="ImgBuffer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="maze Source\MazeGenerator.h">
       <Filter>maze source</Filter>
     </ClInclude>
-    <ClInclude Include="BaseWindow.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Gdi.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Singleton.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="TimeManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="WndGameBase.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="WinMain.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="System.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="MainProc.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="ImgBuffer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="maze Source\MazeGenerator.cpp">
       <Filter>maze source</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseWindow.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Gdi.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="TimeManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="WndGameBase.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

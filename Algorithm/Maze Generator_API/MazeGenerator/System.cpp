@@ -1,65 +1,55 @@
-#include "System.h"
-#include "MainProc.h"
+#include "stdafx.h"
 
-BOOL bIsActive = false;
-
-LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
-BOOL WinInit(LPCWSTR pClassName)
+CSystem::CSystem(void)
 {
-	WNDCLASSEX wcex;
 
-	HINSTANCE hInstance = GetModuleHandle(NULL);
-
-	wcex.cbSize = sizeof(WNDCLASSEX);
-
-	wcex.cbClsExtra = 0;
-	wcex.cbWndExtra = 0;
-	wcex.hInstance = hInstance;
-	wcex.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
-	wcex.hCursor = LoadCursor(0, IDC_ARROW);
-	wcex.hIcon = LoadIcon(hInstance, (LPCTSTR)IDI_APPLICATION);
-	wcex.hIconSm = LoadIcon(wcex.hInstance, (LPCTSTR)IDI_APPLICATION);
-	wcex.lpfnWndProc = WndProc;
-	wcex.lpszClassName = pClassName;
-	wcex.lpszMenuName = NULL;
-	wcex.style = CS_HREDRAW | CS_VREDRAW;
-
-	if (RegisterClassEx(&wcex) == NULL)	return FALSE;
-
-	return TRUE;
 }
 
-HWND WinCreate(LPCWSTR pClassName, LPCWSTR pWindowName, HINSTANCE hInst, int nWindowStyle, RECT rtWindowSize)
+CSystem::~CSystem(void)
 {
-	HWND hWnd;
 
-	hWnd = CreateWindow(pClassName, pWindowName,
-		nWindowStyle,
-		rtWindowSize.left, rtWindowSize.top, rtWindowSize.right - rtWindowSize.left, rtWindowSize.bottom - rtWindowSize.top,
-		NULL, NULL, hInst, NULL);
-
-	ShowWindow(hWnd, SW_SHOW);
-	UpdateWindow(hWnd);
-
-	return hWnd;
 }
 
-VOID MsgLoop()
+bool CSystem::Initialize(void)
 {
-	MSG		msg;
+	CBaseWindow::Initialize();
+	CTimeManager::Initialize();
 
-	while (GetMessage(&msg, 0, 0, 0))
-	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
+	myMaze = new cMaze();
+	myMaze->Initialize();
+
+	return true;
 }
 
-int GameLoop()
+void CSystem::Update(void)
 {
-	MSG		msg;
+	CTimeManager::Pulse();
 
+#ifdef _DEBUG
+	TCHAR buffer[128];
+
+	//wsprintf(buffer, L"[FPS:%5d][Time:%5d]", (int)GetFPS(), (int)GetTime());
+	//g_pGdi->TextAtPos(10, 10, buffer);
+	g_pGdi->GreenPen();
+	myMaze->MazeGenerator_SideWinder();
+
+
+#endif
+
+	g_pGdi->Blt();
+}
+
+void CSystem::Terminate(void)
+{
+	CBaseWindow::Terminate();
+	CTimeManager::Terminate();
+}
+
+void CSystem::Run(void)
+{
+	MSG msg;
+
+	PeekMessage(&msg, NULL, 0, 0, PM_REMOVE);
 	while (1)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
@@ -69,20 +59,16 @@ int GameLoop()
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
 			}
-			else
-			{
-				return (int)msg.wParam;
-			}
+			else	return;
+
 		}
-		else if (bIsActive)
+		else if (m_bIsActive)
 		{
-			Run();
+			Update();
 		}
 		else
 		{
 			WaitMessage();
 		}
 	}
-
-	return 1;
 }

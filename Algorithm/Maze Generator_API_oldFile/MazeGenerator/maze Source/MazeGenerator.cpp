@@ -1,8 +1,8 @@
-#include "../stdafx.h"
 #include "MazeGenerator.h"
 HANDLE hConsole;
 CONSOLE_CURSOR_INFO cusorInfo;
 COORD pos;
+
 
 cMaze::cMaze()
 {
@@ -19,9 +19,9 @@ cMaze::~cMaze()
 
 void cMaze::Initialize()
 {
-	mMazeWidth = 800 / gTileSize;
-	mMazeHeight = 800 / gTileSize;
-	
+	mMazeWidth = WIDTH / gTileSize;
+	mMazeHeight = HEIGHT / gTileSize;
+
 	Maze = new cTile*[mMazeHeight];
 	for (int i = 0; i < mMazeHeight; ++i) {
 		Maze[i] = new cTile[mMazeWidth];
@@ -32,8 +32,8 @@ void cMaze::Initialize()
 	{
 		for (int x = 0; x < mMazeWidth; x++)
 		{
-			Maze[y][x].mX = x + 0.125;
-			Maze[y][x].mY = y + 0.125;
+			Maze[y][x].mX = x;
+			Maze[y][x].mY = y;
 			Maze[y][x].bIsWallOpen[0] = true;
 			Maze[y][x].bIsWallOpen[1] = true;
 			Maze[y][x].bIsWallOpen[2] = true;
@@ -47,13 +47,13 @@ void cMaze::Initialize()
 	//default_Maze();
 }
 
-void cMaze::Render()
+void cMaze::Render(HDC hdc)
 {
 	for (int y = 0; y < mMazeHeight; y++)
 	{
 		for (int x = 0; x < mMazeWidth; x++)
 		{
-			Maze[y][x].drawLine();
+			Maze[y][x].drawLine(hdc);
 		}
 	}
 
@@ -66,18 +66,18 @@ void cMaze::Update()
 	//Sleep(100);
 }
 
-void cMaze::default_Maze()
+void cMaze::default_Maze(HDC hdc)
 {
 	for (int y = 0; y < mMazeHeight; y++)
 	{
 		for (int x = 0; x < mMazeWidth; x++)
 		{
-			Maze[y][x].drawLine(); 
+			Maze[y][x].drawLine(hdc); 
 		}
 	}
 }
 
-void cMaze::MazeGenerator_BinaryTree()
+void cMaze::MazeGenerator_BinaryTree(HDC hdc)
 {
 	if (bIsCompleteGenerated) return;
 
@@ -107,7 +107,7 @@ void cMaze::MazeGenerator_BinaryTree()
 	bIsCompleteGenerated = true;
 }
 
-void cMaze::MazeGenerator_SideWinder()
+void cMaze::MazeGenerator_SideWinder(HDC hdc)
 {
 	if (bIsCompleteGenerated) return;
 
@@ -133,14 +133,14 @@ void cMaze::MazeGenerator_SideWinder()
 				OpenWall(RIGHT, x, y);
 				++count;
 			}
+			this->Render(hdc);
 		}
 	}
-			this->Render();
 	bIsCompleteGenerated = true;
 
 }
 
-void cMaze::MazeGenerator_RecursiveBacktracking()
+void cMaze::MazeGenerator_RecursiveBacktracking(HDC hdc)
 {
 	for (int y = 0; y < mMazeHeight; y++)
 	{
