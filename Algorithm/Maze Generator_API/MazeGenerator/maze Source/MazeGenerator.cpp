@@ -32,8 +32,8 @@ void cMaze::Initialize()
 	{
 		for (int x = 0; x < mMazeWidth; x++)
 		{
-			Maze[y][x].mX = x + 0.125;
-			Maze[y][x].mY = y + 0.125;
+			Maze[y][x].mX = x;
+			Maze[y][x].mY = y;
 			Maze[y][x].bIsWallOpen[0] = true;
 			Maze[y][x].bIsWallOpen[1] = true;
 			Maze[y][x].bIsWallOpen[2] = true;
@@ -41,6 +41,9 @@ void cMaze::Initialize()
 		}
 	}
 	bIsCompleteGenerated = false;
+
+	curTile = &Maze[0][0];
+
 	//MazeGenerator_BinaryTree();
 	//MazeGenerator_SideWinder();
 	//MazeGenerator_RecursiveBacktracking();
@@ -56,25 +59,11 @@ void cMaze::Render()
 			Maze[y][x].drawLine();
 		}
 	}
-
-}
-
-void cMaze::Update()
-{
-	//MoveKeyInput();
-	//MovePlayer(GetRandom(0, 4));
-	//Sleep(100);
 }
 
 void cMaze::default_Maze()
 {
-	for (int y = 0; y < mMazeHeight; y++)
-	{
-		for (int x = 0; x < mMazeWidth; x++)
-		{
-			Maze[y][x].drawLine(); 
-		}
-	}
+	this->Render();
 }
 
 void cMaze::MazeGenerator_BinaryTree()
@@ -97,13 +86,14 @@ void cMaze::MazeGenerator_BinaryTree()
 				continue;
 			}
 
-			if (GetRandom(0, 2) == 0)
+			if (GetRandom(0, 1) == 0)
 				OpenWall(RIGHT, x, y);
 			else
 				OpenWall(BOTTOM, x, y);
 		}
 	}
-
+	this->Render();
+	
 	bIsCompleteGenerated = true;
 }
 
@@ -135,21 +125,28 @@ void cMaze::MazeGenerator_SideWinder()
 			}
 		}
 	}
-			this->Render();
 	bIsCompleteGenerated = true;
 
 }
 
 void cMaze::MazeGenerator_RecursiveBacktracking()
 {
-	for (int y = 0; y < mMazeHeight; y++)
-	{
-		for (int x = 0; x < mMazeWidth; x++)
-		{
-			//Maze[y][x].drawLine(hdc);
-		}
+	g_pGdi->GreenPen();
+	this->Render();
+
+	curTile->drawCurrentTileRect();
+
+	curTile->bIsVisited = true;
+	cTile * nextTile = this->checkNeighborTiles(*curTile);
+
+	if (nextTile) {
+		nextTile->bIsVisited = true;
+		OpenWall(nextTile->comparePrevDir, curTile->mX, curTile->mY);
+		curTile = nextTile;
 	}
-	bIsCompleteGenerated = true;
+	Sleep(100);
+	
+
 
 }
 

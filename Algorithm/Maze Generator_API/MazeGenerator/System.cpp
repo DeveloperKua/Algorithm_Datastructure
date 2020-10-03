@@ -30,8 +30,9 @@ void CSystem::Update(void)
 
 	//wsprintf(buffer, L"[FPS:%5d][Time:%5d]", (int)GetFPS(), (int)GetTime());
 	//g_pGdi->TextAtPos(10, 10, buffer);
-	g_pGdi->GreenPen();
-	myMaze->MazeGenerator_SideWinder();
+	myMaze->MazeGenerator_RecursiveBacktracking();
+	//g_pGdi->GreenPen();
+	//myMaze->Render();
 
 
 #endif
@@ -43,6 +44,7 @@ void CSystem::Terminate(void)
 {
 	CBaseWindow::Terminate();
 	CTimeManager::Terminate();
+	myMaze->~cMaze();
 }
 
 void CSystem::Run(void)

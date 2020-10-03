@@ -10,13 +10,23 @@ enum DIRECTION
 	RIGHT,
 };
 
+enum TILEINFO 
+{
+	NONE, //black
+	CURRENT,//red
+	VISITED,//red2
+	COMPLETED,//white
+};
+
 
 const int gTileSize = 40;
 
 class cTile {
 public:
-	float mX, mY;
+	int mX, mY;
 	bool bIsWallOpen[4] = { true, true, true, true };
+	bool bIsVisited = false;
+	int comparePrevDir;
 
 	cTile(int _x, int _y) {
 		mX = _x;
@@ -29,8 +39,8 @@ public:
 	};
 
 	void drawLine() {
-		int drawX = mX * gTileSize;
-		int drawY = mY * gTileSize;
+		float drawX = (mX + 0.125f) * gTileSize;
+		float drawY = (mY + 0.125f) * gTileSize;
 
 		/*
 	(drawX,drawY)        (drawX + gTileSize ,drawY)
@@ -61,6 +71,17 @@ public:
 		//Cell left Wall
 		if (bIsWallOpen[3]) g_pGdi->Line(drawX, drawY + gTileSize, drawX, drawY);;
 
+		if (this->bIsVisited) {
+			g_pGdi->PinkBrush();
+			g_pGdi->Rect(drawX, drawY, drawX + gTileSize, drawY + gTileSize);
+		}
+	}
+
+	void drawCurrentTileRect() {
+		float drawX = (mX + 0.125f) * gTileSize;
+		float drawY = (mY + 0.125f) * gTileSize;
+		g_pGdi->CyanBrush();
+		g_pGdi->Rect(drawX, drawY, drawX + gTileSize, drawY + gTileSize);
 	}
 };
 
@@ -72,6 +93,7 @@ private:
 
 public:
 	cTile **Maze;
+	cTile *curTile;
 	bool bIsCompleteGenerated = false;
 
 public:
@@ -80,12 +102,61 @@ public:
 
 	void Initialize();
 	void Render();
-	void Update();
 
 	void default_Maze();
 	void MazeGenerator_BinaryTree();
 	void MazeGenerator_SideWinder();
 	void MazeGenerator_RecursiveBacktracking();
+
+	cTile * checkNeighborTiles(const cTile curTile) {
+		//현재 타일 위치
+		int x = curTile.mX;
+		int y = curTile.mY;
+
+		bool top = true, 
+			right = true, 
+			bottom = true, 
+			left = true;
+
+		if (y == 0) top = false;
+		if (x == mMazeWidth - 1) right = false;
+		if (y == mMazeHeight - 1) bottom = false;
+		if (x == 0) left = false;
+
+		//방문하지 않은 이웃 타일 탐색
+
+		//이웃 타일 저장용 벡터
+	
+		vector <cTile*> nbTiles;
+
+		if (top)
+			if(!Maze[y - 1][x].bIsVisited)
+				nbTiles.push_back(&Maze[y - 1][x]);
+
+		if (right)
+			if (!Maze[y][x + 1].bIsVisited)
+				nbTiles.push_back(&Maze[y][x + 1]);
+
+		if (bottom)
+			if (!Maze[y + 1][x].bIsVisited)
+				nbTiles.push_back(&Maze[y + 1][x]);
+
+		if (left)
+			if (!Maze[y][x - 1].bIsVisited)
+				nbTiles.push_back(&Maze[y][x - 1]);
+	
+		//이웃한 타일중 방문하지 않은 타일이 있다면
+		if (!nbTiles.empty()) {
+			//타일 중 랜덤한 타일 리턴
+			int r = GetRandom(0, nbTiles.size() - 1);
+			nbTiles[r]->comparePrevDir = r;
+			return nbTiles[r];
+		}
+		//없다면
+		else {
+			return nullptr;
+		}
+	}
 
 	int GetRandom(int min, int max) {
 		random_device ranDevice;
@@ -95,9 +166,9 @@ public:
 		return (int)dis(gen);
 	}
 
-	void OpenWall(const int index, int x, int y) {
+	void OpenWall(const int dir, int x, int y) {
 
-		switch (index)
+		switch (dir)
 		{
 		case TOP:
 			Maze[y][x].bIsWallOpen[0] = false;
