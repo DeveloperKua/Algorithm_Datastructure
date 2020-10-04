@@ -19,14 +19,13 @@ enum TILEINFO
 };
 
 
-const int gTileSize = 40;
+const int gTileSize = 10;
 
 class cTile {
 public:
 	int mX, mY;
 	bool bIsWallOpen[4] = { true, true, true, true };
 	bool bIsVisited = false;
-	int comparePrevDir;
 
 	cTile(int _x, int _y) {
 		mX = _x;
@@ -59,6 +58,8 @@ public:
 (drawX,drawY + gTileSize)        (drawX + gTileSize ,drawY)
 		*/
 
+		g_pGdi->GreenPen();
+
 		//Cell top Wall
 		if (bIsWallOpen[0]) g_pGdi->Line(drawX, drawY, drawX + gTileSize, drawY);
 
@@ -73,6 +74,7 @@ public:
 
 		if (this->bIsVisited) {
 			g_pGdi->PinkBrush();
+			//g_pGdi->BlackPen();
 			g_pGdi->Rect(drawX, drawY, drawX + gTileSize, drawY + gTileSize);
 		}
 	}
@@ -81,6 +83,7 @@ public:
 		float drawX = (mX + 0.125f) * gTileSize;
 		float drawY = (mY + 0.125f) * gTileSize;
 		g_pGdi->CyanBrush();
+		//g_pGdi->BlackPen();
 		g_pGdi->Rect(drawX, drawY, drawX + gTileSize, drawY + gTileSize);
 	}
 };
@@ -126,7 +129,6 @@ public:
 		//방문하지 않은 이웃 타일 탐색
 
 		//이웃 타일 저장용 벡터
-	
 		vector <cTile*> nbTiles;
 
 		if (top)
@@ -149,7 +151,6 @@ public:
 		if (!nbTiles.empty()) {
 			//타일 중 랜덤한 타일 리턴
 			int r = GetRandom(0, nbTiles.size() - 1);
-			nbTiles[r]->comparePrevDir = r;
 			return nbTiles[r];
 		}
 		//없다면
@@ -186,6 +187,39 @@ public:
 			Maze[y][x].bIsWallOpen[3] = false;
 			Maze[y][x - 1].bIsWallOpen[1] = false;
 			break;
+		}
+	}
+
+	void OpenWall(const cTile * firstTile, const cTile * secondTile) {
+
+		int checkDirection;
+
+		if (firstTile->mX == secondTile->mX) {
+			checkDirection = firstTile->mY - secondTile->mY;
+			if (checkDirection < 0) {
+				OpenWall(BOTTOM, firstTile->mX, firstTile->mY);
+				//_tprintf(firstTile->bIsWallOpen[2] ? _T("curBtm : true, ") : _T("curBtm : false, "));
+				//_tprintf(secondTile->bIsWallOpen[0] ? _T("nextTop : true\n\n") : _T("nextTop : false\n\n"));
+			}
+			else {
+				OpenWall(TOP, firstTile->mX, firstTile->mY);
+				//_tprintf(firstTile->bIsWallOpen[0] ? _T("curTop : true, ") : _T("curTop : false, "));
+				//_tprintf(secondTile->bIsWallOpen[2] ? _T("nextBtm : true\n\n") : _T("nextBtm : false\n\n"));
+			}
+		}
+
+		else {
+			checkDirection = firstTile->mX - secondTile->mX;
+			if (checkDirection < 0) {
+				OpenWall(RIGHT, firstTile->mX, firstTile->mY);
+				//_tprintf(firstTile->bIsWallOpen[1] ? _T("curRight : true, ") : _T("curRight : false, "));
+				//_tprintf(secondTile->bIsWallOpen[3] ? _T("nextLeft : true\n\n") : _T("nextLeft : false\n\n"));
+			}
+			else {
+				OpenWall(LEFT, firstTile->mX, firstTile->mY);
+				//_tprintf(firstTile->bIsWallOpen[3] ? _T("curLeft : true, ") : _T("curLeft : false, "));
+				//_tprintf(secondTile->bIsWallOpen[1] ? _T("nextRight : true\n\n") : _T("nextRight : false\n\n"));
+			}
 		}
 	}
 };

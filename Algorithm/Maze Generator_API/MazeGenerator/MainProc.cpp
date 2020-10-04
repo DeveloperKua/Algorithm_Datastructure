@@ -5,6 +5,11 @@ HDC		g_hdcScreen;
 
 int OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 {
+	AllocConsole();
+	_tfreopen(_T("CONOUT$"), _T("w"), stdout);
+	_tfreopen(_T("CONIN$"), _T("r"), stdin);
+	_tfreopen(_T("CONERR$"), _T("w"), stderr);
+	_tsetlocale(LC_ALL, _T(""));
 	g_hdcScreen = GetDC(hWnd);
 
 	g_pGdi->StartDraw(g_hdcScreen);
@@ -82,6 +87,8 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 		return OnMouseMove(hWnd, wParam, lParam);
 	case WM_DESTROY:
 		return OnDestroy(hWnd, wParam, lParam);
+	case WM_CLOSE:
+		FreeConsole();
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}

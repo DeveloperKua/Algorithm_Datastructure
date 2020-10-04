@@ -131,22 +131,19 @@ void cMaze::MazeGenerator_SideWinder()
 
 void cMaze::MazeGenerator_RecursiveBacktracking()
 {
-	g_pGdi->GreenPen();
 	this->Render();
 
-	curTile->drawCurrentTileRect();
+	//curTile->drawCurrentTileRect();
 
 	curTile->bIsVisited = true;
 	cTile * nextTile = this->checkNeighborTiles(*curTile);
 
 	if (nextTile) {
 		nextTile->bIsVisited = true;
-		OpenWall(nextTile->comparePrevDir, curTile->mX, curTile->mY);
+		OpenWall(curTile, nextTile);
 		curTile = nextTile;
 	}
-	Sleep(100);
+
 	
-
-
 }
 

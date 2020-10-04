@@ -4,7 +4,7 @@
 //
 
 #pragma once
-
+#pragma warning(disable: 4996)
 #include "targetver.h"
 
 #define WIN32_LEAN_AND_MEAN             // 거의 사용되지 않는 내용은 Windows 헤더에서 제외합니다.
@@ -18,6 +18,8 @@
 #include <memory.h>
 #include <tchar.h>
 #include <time.h>
+#include <locale>
+#include <stdio.h>
 
 #include <conio.h> 
 #include <stack>
