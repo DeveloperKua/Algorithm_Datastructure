@@ -19,7 +19,7 @@ enum TILEINFO
 };
 
 
-const int gTileSize = 10;
+const int gTileSize = 40;
 
 class cTile {
 public:
@@ -58,33 +58,45 @@ public:
 (drawX,drawY + gTileSize)        (drawX + gTileSize ,drawY)
 		*/
 
-		g_pGdi->GreenPen();
+		if (this->bIsVisited) {
+			g_pGdi->BlackBrush();
+			g_pGdi->BlackPen();
+			g_pGdi->Rect(drawX - 1, drawY - 1, drawX + gTileSize + 1, drawY + gTileSize + 1);
+		}
 
 		//Cell top Wall
-		if (bIsWallOpen[0]) g_pGdi->Line(drawX, drawY, drawX + gTileSize, drawY);
+		if (bIsWallOpen[0]) {
+			g_pGdi->WhitePen();
+			g_pGdi->Line(drawX, drawY, drawX + gTileSize, drawY);
+		}
 
 		//Cell right Wall
-		if (bIsWallOpen[1]) g_pGdi->Line(drawX + gTileSize, drawY, drawX + gTileSize, drawY + gTileSize);
+		if (bIsWallOpen[1]) {
+			g_pGdi->WhitePen();
+			g_pGdi->Line(drawX + gTileSize, drawY, drawX + gTileSize, drawY + gTileSize);
+		}
 
 		//Cell bottom Wall
-		if (bIsWallOpen[2]) g_pGdi->Line(drawX + gTileSize, drawY + gTileSize, drawX, drawY + gTileSize);
+		if (bIsWallOpen[2]) {
+			g_pGdi->WhitePen();
+			g_pGdi->Line(drawX + gTileSize, drawY + gTileSize, drawX, drawY + gTileSize);
+		}
 
 		//Cell left Wall
-		if (bIsWallOpen[3]) g_pGdi->Line(drawX, drawY + gTileSize, drawX, drawY);;
-
-		if (this->bIsVisited) {
-			g_pGdi->PinkBrush();
-			//g_pGdi->BlackPen();
-			g_pGdi->Rect(drawX, drawY, drawX + gTileSize, drawY + gTileSize);
+		if (bIsWallOpen[3]) {
+			g_pGdi->WhitePen();
+			g_pGdi->Line(drawX, drawY + gTileSize, drawX, drawY);;
 		}
+
+		
 	}
 
 	void drawCurrentTileRect() {
 		float drawX = (mX + 0.125f) * gTileSize;
 		float drawY = (mY + 0.125f) * gTileSize;
 		g_pGdi->CyanBrush();
-		//g_pGdi->BlackPen();
-		g_pGdi->Rect(drawX, drawY, drawX + gTileSize, drawY + gTileSize);
+		g_pGdi->BlackPen();
+		g_pGdi->Rect(drawX + 1.2f, drawY + 1.2f, drawX + gTileSize - 1.0f, drawY + gTileSize - 1.0f);
 	}
 };
 
@@ -97,6 +109,11 @@ private:
 public:
 	cTile **Maze;
 	cTile *curTile;
+
+	//member for RecursiveBacktracking 
+	stack<cTile*> tileStack;
+	int visitedCellCount;
+
 	bool bIsCompleteGenerated = false;
 
 public:

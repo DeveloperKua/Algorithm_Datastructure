@@ -21,6 +21,7 @@ void cMaze::Initialize()
 {
 	mMazeWidth = 800 / gTileSize;
 	mMazeHeight = 800 / gTileSize;
+	visitedCellCount = 1;
 	
 	Maze = new cTile*[mMazeHeight];
 	for (int i = 0; i < mMazeHeight; ++i) {
@@ -131,19 +132,37 @@ void cMaze::MazeGenerator_SideWinder()
 
 void cMaze::MazeGenerator_RecursiveBacktracking()
 {
-	this->Render();
 
-	//curTile->drawCurrentTileRect();
-
+	//다음 타일 랜덤 선정(checkNeighborTiles)
 	curTile->bIsVisited = true;
 	cTile * nextTile = this->checkNeighborTiles(*curTile);
 
-	if (nextTile) {
-		nextTile->bIsVisited = true;
-		OpenWall(curTile, nextTile);
-		curTile = nextTile;
-	}
+	if (visitedCellCount < mMazeWidth * mMazeHeight) {
+		if (nextTile != nullptr) {
+			nextTile->bIsVisited = true;
 
-	
+			//stack push
+			tileStack.push(curTile);
+
+			//벽 제거
+			OpenWall(curTile, nextTile);
+
+			//현재 타일 갱신
+			curTile = nextTile;
+
+			//알고리즘 종료 여부 확인을 위한 카운트
+			visitedCellCount++;
+		}
+		else if (!tileStack.empty()) {
+
+			curTile = tileStack.top();
+			tileStack.pop();
+		}
+	}
+	this->Render();
+	curTile->drawCurrentTileRect();
+
+
+	Sleep(50);
 }
 
