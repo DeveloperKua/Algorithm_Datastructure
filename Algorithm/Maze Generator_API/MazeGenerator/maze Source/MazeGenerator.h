@@ -1,4 +1,5 @@
 #pragma once
+#include "../InputHandler.h"
 
 using namespace std;
 
@@ -100,7 +101,8 @@ public:
 	}
 };
 
-class cMaze {
+class cMaze : public IInputHandler
+{
 
 private:
 	int mMazeWidth;
@@ -114,6 +116,7 @@ public:
 	stack<cTile*> tileStack;
 	int visitedCellCount;
 
+	int mazeAlgorithmType = 0;
 	bool bIsCompleteGenerated = false;
 
 public:
@@ -133,9 +136,9 @@ public:
 		int x = curTile.mX;
 		int y = curTile.mY;
 
-		bool top = true, 
-			right = true, 
-			bottom = true, 
+		bool top = true,
+			right = true,
+			bottom = true,
 			left = true;
 
 		if (y == 0) top = false;
@@ -149,7 +152,7 @@ public:
 		vector <cTile*> nbTiles;
 
 		if (top)
-			if(!Maze[y - 1][x].bIsVisited)
+			if (!Maze[y - 1][x].bIsVisited)
 				nbTiles.push_back(&Maze[y - 1][x]);
 
 		if (right)
@@ -163,7 +166,7 @@ public:
 		if (left)
 			if (!Maze[y][x - 1].bIsVisited)
 				nbTiles.push_back(&Maze[y][x - 1]);
-	
+
 		//이웃한 타일중 방문하지 않은 타일이 있다면
 		if (!nbTiles.empty()) {
 			//타일 중 랜덤한 타일 리턴
@@ -239,6 +242,10 @@ public:
 			}
 		}
 	}
+
+public:
+	void KeyboardHandler(void);
+	void MouseHandler(MOUSESTATE diMouseState);
 };
 
 

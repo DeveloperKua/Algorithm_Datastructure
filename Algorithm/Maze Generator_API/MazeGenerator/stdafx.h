@@ -36,9 +36,12 @@
 
 #include "resource.h"
 #include "Singleton.h"
+#include "Vector2d.h"
 #include "BaseWindow.h"
 #include "TimeManager.h"
 #include "Gdi.h"
+#include "InputHandler.h"
+#include "InputManager.h"
 #include "maze Source/MazeGenerator.h"
 #include "System.h"
 #include "MainProc.h"

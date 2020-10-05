@@ -16,8 +16,11 @@
     <Filter Include="algorithm source">
       <UniqueIdentifier>{fe4668c3-310d-4535-8471-1506dbd5fc6a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="menu source">
+    <Filter Include="input">
       <UniqueIdentifier>{21bcd620-efdf-4c65-b14e-add05be7d199}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{c6b061a1-8622-48d0-9e0e-be689a0689ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +57,18 @@
     <ClInclude Include="stdafx.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>input</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2d.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Util.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="System.cpp">
@@ -79,6 +94,12 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>win api source</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>input</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2d.cpp">
+      <Filter>Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

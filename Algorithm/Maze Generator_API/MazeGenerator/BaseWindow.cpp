@@ -42,8 +42,8 @@ bool CBaseWindow::Initialize()
 
 	rtRect.left = 0;
 	rtRect.top = 0;
-	rtRect.right = 810;
-	rtRect.bottom = 810;
+	rtRect.right = 850;
+	rtRect.bottom = 850;
 
 	//윈도우 형식을 재정의 함수
 	AdjustWindowRect(&rtRect, WS_BORDER| WS_CAPTION | WS_SYSMENU, false);

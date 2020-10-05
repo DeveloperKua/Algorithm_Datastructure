@@ -88,7 +88,7 @@ void CGdi::StartDraw(HDC hdc)
    
 	m_hdcScreen = hdc;
     m_hdc = CreateCompatibleDC( m_hdcScreen );
-	m_hbm = CreateCompatibleBitmap( m_hdcScreen, 810, 810 );
+	m_hbm = CreateCompatibleBitmap( m_hdcScreen, 850, 850 );
 	SelectObject( m_hdc, m_hbm );
 
     m_OldPen = (HPEN)SelectObject(hdc, m_BlackPen);
@@ -111,7 +111,7 @@ void CGdi::StopDraw(HDC hdc)
 
 void CGdi::Blt()
 {
-	BitBlt( m_hdcScreen, 0, 0, 810, 810, m_hdc, 0, 0, SRCCOPY );
+	BitBlt( m_hdcScreen, 0, 0, 850, 850, m_hdc, 0, 0, SRCCOPY );
 }
 
 void CGdi::Rect(int l, int t, int r, int b)

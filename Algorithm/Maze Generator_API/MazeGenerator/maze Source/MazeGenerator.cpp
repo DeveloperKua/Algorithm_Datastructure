@@ -49,6 +49,9 @@ void cMaze::Initialize()
 	//MazeGenerator_SideWinder();
 	//MazeGenerator_RecursiveBacktracking();
 	//default_Maze();
+
+	g_pInputManager->SetInputHandler(this);
+
 }
 
 void cMaze::Render()
@@ -165,4 +168,22 @@ void cMaze::MazeGenerator_RecursiveBacktracking()
 
 	Sleep(50);
 }
+
+void cMaze::KeyboardHandler(void)
+{
+	if (g_pKeyCodeScan(VK_LEFT)) {
+		_tprintf(_T("mode 2 \n"));
+	}
+
+	if (g_pKeyCodeScan(VK_F1)) { mazeAlgorithmType = 0; }
+	if (g_pKeyCodeScan(VK_F2)) { mazeAlgorithmType = 1; 
+	_tprintf(_T("mode 2 \n"));
+
+	}
+}
+
+void cMaze::MouseHandler(MOUSESTATE diMouseState)
+{
+}
+
 

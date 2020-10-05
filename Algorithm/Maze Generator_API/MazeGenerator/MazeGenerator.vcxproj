@@ -153,6 +153,8 @@
   <ItemGroup>
     <ClInclude Include="BaseWindow.h" />
     <ClInclude Include="Gdi.h" />
+    <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="MainProc.h" />
     <ClInclude Include="maze Source\MazeGenerator.h" />
     <ClInclude Include="Resource.h" />
@@ -161,16 +163,20 @@
     <ClInclude Include="System.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TimeManager.h" />
+    <ClInclude Include="Util.h" />
+    <ClInclude Include="Vector2d.h" />
     <ClInclude Include="WndGameBase.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseWindow.cpp" />
     <ClCompile Include="Gdi.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="MainProc.cpp" />
     <ClCompile Include="maze Source\MazeGenerator.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="TimeManager.cpp" />
+    <ClCompile Include="Vector2d.cpp" />
     <ClCompile Include="WndGameBase.cpp" />
   </ItemGroup>
   <ItemGroup>

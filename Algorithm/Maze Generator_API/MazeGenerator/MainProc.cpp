@@ -2,20 +2,18 @@
 #include "MainProc.h"
 
 HDC		g_hdcScreen;
-HINSTANCE g_hInstance;
 
 int OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 {
 	///log 확인용 콘솔 생성
-	/*AllocConsole();
+	AllocConsole();
 	_tfreopen(_T("CONOUT$"), _T("w"), stdout);
 	_tfreopen(_T("CONIN$"), _T("r"), stdin);
 	_tfreopen(_T("CONERR$"), _T("w"), stderr);
-	_tsetlocale(LC_ALL, _T(""));*/
+	_tsetlocale(LC_ALL, _T(""));
 	g_hdcScreen = GetDC(hWnd);
 
-	CreateWindow(L"button", L"SendButton", WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 
-		10, 160, 100, 30, hWnd, (HMENU)IDC_SEND1, g_hInstance, NULL);
+
 
 	g_pGdi->StartDraw(g_hdcScreen);
 	SetTimer(hWnd, 0, 1000, NULL);
@@ -25,6 +23,7 @@ int OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 
 int OnPaint(HWND hWnd, WPARAM wParam, LPARAM lParam)
 {
+
 	return 0;
 }
 
@@ -35,7 +34,6 @@ int OnTimer(HWND hWnd, WPARAM wParam, LPARAM lParam)
 
 int OnKeyDown(HWND hWnd, WPARAM wParam, LPARAM lParam)
 {
-
 	return 0;
 }
 
@@ -93,7 +91,7 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 	case WM_DESTROY:
 		return OnDestroy(hWnd, wParam, lParam);
 	case WM_CLOSE:
-		//FreeConsole();
+		FreeConsole();
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}

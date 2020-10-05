@@ -23,7 +23,7 @@ public:
 
 	static T* GetSingleton()
 	{
-		return4(ms_pSingleton);
+		return(ms_pSingleton);
 	}
 };
 
