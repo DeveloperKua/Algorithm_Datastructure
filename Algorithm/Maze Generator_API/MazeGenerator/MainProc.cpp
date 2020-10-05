@@ -2,6 +2,7 @@
 #include "MainProc.h"
 
 HDC		g_hdcScreen;
+HINSTANCE g_hInstance;
 
 int OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 {
@@ -12,6 +13,9 @@ int OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	_tfreopen(_T("CONERR$"), _T("w"), stderr);
 	_tsetlocale(LC_ALL, _T(""));*/
 	g_hdcScreen = GetDC(hWnd);
+
+	CreateWindow(L"button", L"SendButton", WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 
+		10, 160, 100, 30, hWnd, (HMENU)IDC_SEND1, g_hInstance, NULL);
 
 	g_pGdi->StartDraw(g_hdcScreen);
 	SetTimer(hWnd, 0, 1000, NULL);

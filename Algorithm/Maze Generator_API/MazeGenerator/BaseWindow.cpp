@@ -12,10 +12,10 @@ CBaseWindow::~CBaseWindow(void)
 
 bool CBaseWindow::Initialize()
 {
-	HINSTANCE hInstance = GetModuleHandle(NULL);
+	HINSTANCE g_hInstance = GetModuleHandle(NULL);
 
 	TCHAR szTitle[MAX_LOADSTRING];
-	LoadString( hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING );
+	LoadString(g_hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING );
 
 	//윈도우 클래스 정의/초기화
 	WNDCLASSEX wcex;
@@ -24,8 +24,8 @@ bool CBaseWindow::Initialize()
 	wcex.lpfnWndProc	= (WNDPROC)MainWndProc;
 	wcex.cbClsExtra		= 0;
 	wcex.cbWndExtra		= 0;
-	wcex.hInstance		= hInstance;
-	wcex.hIcon			= LoadIcon(hInstance, (LPCTSTR)IDI_MAZEGENERATOR);
+	wcex.hInstance		= g_hInstance;
+	wcex.hIcon			= LoadIcon(g_hInstance, (LPCTSTR)IDI_MAZEGENERATOR);
 	wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);
 	wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW + 1);
 	wcex.lpszMenuName	= NULL;
@@ -36,7 +36,7 @@ bool CBaseWindow::Initialize()
 
 	//윈도우 생성
 	m_hWnd = CreateWindow(szTitle, szTitle, WS_BORDER| WS_CAPTION | WS_SYSMENU,
-		0, 0, 0, 0, NULL, NULL, hInstance, NULL);
+		0, 0, 0, 0, NULL, NULL, g_hInstance, NULL);
 
 	RECT rtRect; //사각형 구조체
 

@@ -1,5 +1,6 @@
 #pragma once
 
+extern HINSTANCE g_hInstance;
 class CBaseWindow
 {
 protected:
