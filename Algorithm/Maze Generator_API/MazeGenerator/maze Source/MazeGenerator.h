@@ -39,8 +39,8 @@ public:
 	};
 
 	void drawLine() {
-		float drawX = (mX + 0.125f) * gTileSize;
-		float drawY = (mY + 0.125f) * gTileSize;
+		float drawX = (mX + 1.0f) * gTileSize;
+		float drawY = (mY + 1.0f) * gTileSize;
 
 		/*
 	(drawX,drawY)        (drawX + gTileSize ,drawY)
@@ -93,8 +93,8 @@ public:
 	}
 
 	void drawCurrentTileRect() {
-		float drawX = (mX + 0.125f) * gTileSize;
-		float drawY = (mY + 0.125f) * gTileSize;
+		float drawX = (mX + 1.0f) * gTileSize;
+		float drawY = (mY + 1.0f) * gTileSize;
 		g_pGdi->CyanBrush();
 		g_pGdi->BlackPen();
 		g_pGdi->Rect(drawX + 1.2f, drawY + 1.2f, drawX + gTileSize - 1.0f, drawY + gTileSize - 1.0f);
@@ -111,8 +111,10 @@ private:
 public:
 	cTile **Maze;
 	cTile *curTile;
+	bool isReset;
+	
+	int SideWinderCount = 0;
 
-	//member for RecursiveBacktracking 
 	stack<cTile*> tileStack;
 	int visitedCellCount;
 
@@ -241,6 +243,19 @@ public:
 				//_tprintf(secondTile->bIsWallOpen[1] ? _T("nextRight : true\n\n") : _T("nextRight : false\n\n"));
 			}
 		}
+	}
+
+	void ResetMaze() {
+		if (isReset) return;
+		g_pGdi->BlackBrush();
+		g_pGdi->BlackPen();
+		g_pGdi->Rect(10,10,850,850);
+		while (!tileStack.empty()) {
+			tileStack.pop();
+		}
+		Initialize();
+
+		isReset = true;
 	}
 
 public:

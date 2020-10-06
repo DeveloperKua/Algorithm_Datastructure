@@ -6,11 +6,11 @@ HDC		g_hdcScreen;
 int OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 {
 	///log 확인용 콘솔 생성
-	AllocConsole();
+	/*AllocConsole();
 	_tfreopen(_T("CONOUT$"), _T("w"), stdout);
 	_tfreopen(_T("CONIN$"), _T("r"), stdin);
 	_tfreopen(_T("CONERR$"), _T("w"), stderr);
-	_tsetlocale(LC_ALL, _T(""));
+	_tsetlocale(LC_ALL, _T(""));*/
 	g_hdcScreen = GetDC(hWnd);
 
 
@@ -91,7 +91,7 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 	case WM_DESTROY:
 		return OnDestroy(hWnd, wParam, lParam);
 	case WM_CLOSE:
-		FreeConsole();
+		//FreeConsole();
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}

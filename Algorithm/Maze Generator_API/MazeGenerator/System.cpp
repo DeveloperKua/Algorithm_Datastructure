@@ -33,30 +33,41 @@ void CSystem::Update(void)
 
 
 #ifdef _DEBUG
-	TCHAR buffer[128];
 
-	//myMaze->Render();
-
-	switch (myMaze->mazeAlgorithmType)
-	{
-	case 0:
-
-		wsprintf(buffer, L"[FPS:%5d][Time:%5d]", (int)GetFPS(), (int)GetTime());
-		g_pGdi->TextAtPos(10, 10, buffer);
-		//_tprintf( _T("mode 1 \n"));
-
-		break;
-	case 1:
-		myMaze->MazeGenerator_RecursiveBacktracking();
-		//_tprintf(_T("mode 2 \n"));
-
-		break;
-	}
 
 
 
 #endif
+	TCHAR buffer[128];
 
+	//myMaze->Render();
+	wsprintf(buffer, L"[FPS:%5d][Time:%5d]", (int)GetFPS(), (int)GetTime());
+	g_pGdi->TextAtPos(10, 0, buffer);
+
+	wsprintf(buffer, L"미로 생성 알고리즘 F1-Binary Tree F2-SideWinder F3-RecursiveBacktracking ");
+	g_pGdi->TextAtPos(170, 0, buffer);
+	switch (myMaze->mazeAlgorithmType)
+	{
+	case 0:
+		break;
+	case 1:
+		wsprintf(buffer, L"현재 알고리즘:Binary Tree Algorithm");
+		g_pGdi->TextAtPos(10, 20, buffer);
+		myMaze->MazeGenerator_BinaryTree();
+		break;
+	case 2:
+		wsprintf(buffer, L"현재 알고리즘:SideWinder Algorithm");
+		g_pGdi->TextAtPos(10, 20, buffer);
+		myMaze->MazeGenerator_SideWinder();
+		break;
+	case 3:
+		wsprintf(buffer, L"현재 알고리즘:Recursive Backtracking Algorithm");
+		g_pGdi->TextAtPos(10, 20, buffer);
+		myMaze->MazeGenerator_RecursiveBacktracking();
+		break;
+	case 4:
+		break;
+}
 	g_pGdi->Blt();
 }
 
