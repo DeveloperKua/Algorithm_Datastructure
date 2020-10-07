@@ -13,8 +13,6 @@ int OnCreate(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	_tsetlocale(LC_ALL, _T(""));*/
 	g_hdcScreen = GetDC(hWnd);
 
-
-
 	g_pGdi->StartDraw(g_hdcScreen);
 	SetTimer(hWnd, 0, 1000, NULL);
 
