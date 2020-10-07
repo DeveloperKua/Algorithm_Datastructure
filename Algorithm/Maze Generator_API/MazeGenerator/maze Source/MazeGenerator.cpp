@@ -45,11 +45,6 @@ void cMaze::Initialize()
 
 	curTile = &Maze[0][0];
 
-	//MazeGenerator_BinaryTree();
-	//MazeGenerator_SideWinder();
-	//MazeGenerator_RecursiveBacktracking();
-	//default_Maze();
-
 	g_pInputManager->SetInputHandler(this);
 
 }
@@ -63,11 +58,6 @@ void cMaze::Render()
 			Maze[y][x].drawLine();
 		}
 	}
-}
-
-void cMaze::default_Maze()
-{
-	this->Render();
 }
 
 //미로 생성 과정을 화면에 렌더하기 위해 수정한 code
@@ -112,38 +102,6 @@ void cMaze::MazeGenerator_BinaryTree()
 	this->Render();
 }
 
-//기존 binary tree code
-/*void cMaze::MazeGenerator_BinaryTree()
-{
-	if (bIsCompleteGenerated) return;
-
-	for (int y = 0; y < mMazeHeight; y++)
-	{
-		for (int x = 0; x < mMazeWidth; x++)
-		{
-			if (y == mMazeHeight - 1 && x == mMazeWidth - 1)
-				continue;
-			if (y == mMazeHeight - 1) {
-				OpenWall(RIGHT, x, y);
-				continue;
-			}
-
-			if (x == mMazeWidth - 1) {
-				OpenWall(BOTTOM, x, y);
-				continue;
-			}
-
-			if (GetRandom(0, 1) == 0)
-				OpenWall(RIGHT, x, y);
-			else
-				OpenWall(BOTTOM, x, y);
-		}
-	}
-	this->Render();
-	
-	bIsCompleteGenerated = true;
-}*/
-
 //미로 생성 과정을 화면에 렌더하기 위해 수정한 code
 void cMaze::MazeGenerator_SideWinder()
 {
@@ -176,39 +134,6 @@ void cMaze::MazeGenerator_SideWinder()
 	Sleep(0);
 
 }
-
-//기존 sidewinder 코드
-/*void cMaze::MazeGenerator_SideWinder()
-{
-	if (bIsCompleteGenerated) return;
-
-	for (int y = 0; y < mMazeHeight; y++)
-	{
-		int count = 0;
-		for (int x = 0; x < mMazeWidth; x++)
-		{
-			if (y == 0) {
-				if(x == mMazeWidth - 1) continue;
-				OpenWall(RIGHT, x, y);
-				continue;
-			}
-
-			if (GetRandom(0, 1) == 0 || x + 1 == mMazeWidth) {
-				int RandomX = GetRandom(x - count, x);
-				count = 0;
-				OpenWall(TOP, RandomX, y);
-			}
-			else if(x + 1 < mMazeWidth){
-				OpenWall(RIGHT, x, y);
-				++count;
-			}
-		}
-	}
-	this->Render();
-
-	bIsCompleteGenerated = true;
-
-}*/
 
 void cMaze::MazeGenerator_RecursiveBacktracking()
 {
@@ -267,5 +192,70 @@ void cMaze::KeyboardHandler(void)
 void cMaze::MouseHandler(MOUSESTATE diMouseState)
 {
 }
+
+//기존 binary tree code
+/*void cMaze::MazeGenerator_BinaryTree()
+{
+	if (bIsCompleteGenerated) return;
+
+	for (int y = 0; y < mMazeHeight; y++)
+	{
+		for (int x = 0; x < mMazeWidth; x++)
+		{
+			if (y == mMazeHeight - 1 && x == mMazeWidth - 1)
+				continue;
+			if (y == mMazeHeight - 1) {
+				OpenWall(RIGHT, x, y);
+				continue;
+			}
+
+			if (x == mMazeWidth - 1) {
+				OpenWall(BOTTOM, x, y);
+				continue;
+			}
+
+			if (GetRandom(0, 1) == 0)
+				OpenWall(RIGHT, x, y);
+			else
+				OpenWall(BOTTOM, x, y);
+		}
+	}
+	this->Render();
+
+	bIsCompleteGenerated = true;
+}*/
+
+//기존 sidewinder 코드
+/*void cMaze::MazeGenerator_SideWinder()
+{
+	if (bIsCompleteGenerated) return;
+
+	for (int y = 0; y < mMazeHeight; y++)
+	{
+		int count = 0;
+		for (int x = 0; x < mMazeWidth; x++)
+		{
+			if (y == 0) {
+				if(x == mMazeWidth - 1) continue;
+				OpenWall(RIGHT, x, y);
+				continue;
+			}
+
+			if (GetRandom(0, 1) == 0 || x + 1 == mMazeWidth) {
+				int RandomX = GetRandom(x - count, x);
+				count = 0;
+				OpenWall(TOP, RandomX, y);
+			}
+			else if(x + 1 < mMazeWidth){
+				OpenWall(RIGHT, x, y);
+				++count;
+			}
+		}
+	}
+	this->Render();
+
+	bIsCompleteGenerated = true;
+
+}*/
 
 

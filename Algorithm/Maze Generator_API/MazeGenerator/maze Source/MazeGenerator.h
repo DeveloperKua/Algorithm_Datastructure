@@ -11,15 +11,6 @@ enum DIRECTION
 	RIGHT,
 };
 
-enum TILEINFO 
-{
-	NONE, //black
-	CURRENT,//red
-	VISITED,//red2
-	COMPLETED,//white
-};
-
-
 const int gTileSize = 40;
 
 class cTile {
@@ -113,10 +104,13 @@ public:
 	cTile *curTile;
 	bool isReset;
 	
+	//for sidewinder member
 	int SideWinderCount = 0;
 
-	stack<cTile*> tileStack;
 	int visitedCellCount;
+
+	//for RecursiveBacktracking member
+	stack<cTile*> tileStack;
 
 	int mazeAlgorithmType = 0;
 	bool bIsCompleteGenerated = false;
@@ -218,30 +212,14 @@ public:
 
 		if (firstTile->mX == secondTile->mX) {
 			checkDirection = firstTile->mY - secondTile->mY;
-			if (checkDirection < 0) {
-				OpenWall(BOTTOM, firstTile->mX, firstTile->mY);
-				//_tprintf(firstTile->bIsWallOpen[2] ? _T("curBtm : true, ") : _T("curBtm : false, "));
-				//_tprintf(secondTile->bIsWallOpen[0] ? _T("nextTop : true\n\n") : _T("nextTop : false\n\n"));
-			}
-			else {
-				OpenWall(TOP, firstTile->mX, firstTile->mY);
-				//_tprintf(firstTile->bIsWallOpen[0] ? _T("curTop : true, ") : _T("curTop : false, "));
-				//_tprintf(secondTile->bIsWallOpen[2] ? _T("nextBtm : true\n\n") : _T("nextBtm : false\n\n"));
-			}
+			if (checkDirection < 0) { OpenWall(BOTTOM, firstTile->mX, firstTile->mY); }
+			else { OpenWall(TOP, firstTile->mX, firstTile->mY); }
 		}
 
 		else {
 			checkDirection = firstTile->mX - secondTile->mX;
-			if (checkDirection < 0) {
-				OpenWall(RIGHT, firstTile->mX, firstTile->mY);
-				//_tprintf(firstTile->bIsWallOpen[1] ? _T("curRight : true, ") : _T("curRight : false, "));
-				//_tprintf(secondTile->bIsWallOpen[3] ? _T("nextLeft : true\n\n") : _T("nextLeft : false\n\n"));
-			}
-			else {
-				OpenWall(LEFT, firstTile->mX, firstTile->mY);
-				//_tprintf(firstTile->bIsWallOpen[3] ? _T("curLeft : true, ") : _T("curLeft : false, "));
-				//_tprintf(secondTile->bIsWallOpen[1] ? _T("nextRight : true\n\n") : _T("nextRight : false\n\n"));
-			}
+			if (checkDirection < 0) { OpenWall(RIGHT, firstTile->mX, firstTile->mY); }
+			else { OpenWall(LEFT, firstTile->mX, firstTile->mY); }
 		}
 	}
 
