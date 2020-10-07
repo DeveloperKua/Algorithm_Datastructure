@@ -33,23 +33,6 @@ public:
 		float drawX = (mX + 1.0f) * gTileSize;
 		float drawY = (mY + 1.0f) * gTileSize;
 
-		/*
-	(drawX,drawY)       (drawX + gTileSize ,drawY)
-		  Ｋ	                        Ｉ
-			忙式式式式式式式式式式式式式式式式式式式式式式忖
-			弛                      弛
-			弛                      弛
-			弛                      弛
-			弛                      弛
-			弛                      弛
-			弛                      弛
-			弛                      弛
-			弛                      弛
-			戌式式式式式式式式式式式式式式式式式式式式式式戎
-		   Ｈ                        Ｊ
-(drawX,drawY + gTileSize)        (drawX + gTileSize ,drawY)
-		*/
-
 		if (this->bIsVisited) {
 			g_pGdi->BlackBrush();
 			g_pGdi->BlackPen();
