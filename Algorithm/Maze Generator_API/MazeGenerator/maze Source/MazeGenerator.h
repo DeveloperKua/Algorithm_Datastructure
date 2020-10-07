@@ -34,19 +34,19 @@ public:
 		float drawY = (mY + 1.0f) * gTileSize;
 
 		/*
-	(drawX,drawY)        (drawX + gTileSize ,drawY)
-		  Ｋ							 Ｉ
-			忙式式式式式式式式式式式式式式式式式式式式式式式忖
-			弛						弛
-			弛					    弛
-			弛					    弛
-			弛					    弛
-			弛					    弛
-			弛					    弛
-			弛					    弛
-			弛					    弛
-			戌式式式式式式式式式式式式式式式式式式式式式式式戎
-		   Ｈ						 Ｊ
+	(drawX,drawY)       (drawX + gTileSize ,drawY)
+		  Ｋ						   Ｉ
+			忙式式式式式式式式式式式式式式式式式式式式式忖
+			弛					  弛
+			弛					  弛
+			弛					  弛
+			弛					  弛
+			弛					  弛
+			弛					  弛
+			弛					  弛
+			弛					  弛
+			戌式式式式式式式式式式式式式式式式式式式式式戎
+		   Ｈ					   Ｊ
 (drawX,drawY + gTileSize)        (drawX + gTileSize ,drawY)
 		*/
 
@@ -122,7 +122,6 @@ public:
 	void Initialize();
 	void Render();
 
-	void default_Maze();
 	void MazeGenerator_BinaryTree();
 	void MazeGenerator_SideWinder();
 	void MazeGenerator_RecursiveBacktracking();
