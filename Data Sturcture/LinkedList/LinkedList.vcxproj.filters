@@ -23,7 +23,7 @@
     <ClInclude Include="LinkedList.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="LinkedList.hpp">
+    <ClInclude Include="LinkedList.cpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

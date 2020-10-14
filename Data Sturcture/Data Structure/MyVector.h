@@ -56,5 +56,3 @@ public:
 
 	void RemoveAll();
 };
-
-#include "MyVector.hpp";

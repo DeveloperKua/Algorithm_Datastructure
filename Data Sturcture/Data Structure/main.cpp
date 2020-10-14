@@ -1,4 +1,5 @@
 ﻿#include "MyVector.h"
+#include "MyVector.cpp";
 
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 CONSOLE_CURSOR_INFO cusorInfo;

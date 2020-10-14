@@ -1,4 +1,6 @@
 #include "LinkedList.h"
+#include "LinkedList.cpp"
+
 
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 CONSOLE_CURSOR_INFO cusorInfo;

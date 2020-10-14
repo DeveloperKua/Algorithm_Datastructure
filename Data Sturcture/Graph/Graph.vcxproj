@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{5BD7317A-6E69-4122-BADE-9FBF8DD10E2C}</ProjectGuid>
+    <ProjectGuid>{7CD23E90-DFA8-424D-A862-660F3D21D6E5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>LinkedList</RootNamespace>
+    <RootNamespace>Graph</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -151,11 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="LinkedList.h" />
-    <ClInclude Include="LinkedList.cpp" />
+    <ClCompile Include="Graph.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
