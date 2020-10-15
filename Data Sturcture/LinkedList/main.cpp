@@ -13,17 +13,19 @@ list<int> sl_int;
 list<float> sl_float;
 list<char> sl_char;
 
+#pragma region UtilFunc
 void show_myListInfo();
 void show_stlListInfo();
-inline void show_myListInfo();
-inline void show_stlListInfo();
-inline void push_front_AllList();
-inline void push_back_AllList();
-inline void pop_front_AllList();
-inline void pop_back_AllList();
-inline void clear_AllList();
-inline void insert_AllList();
-inline void erase_AllList();
+void show_myListInfo();
+void show_stlListInfo();
+void push_front_AllList();
+void push_back_AllList();
+void pop_front_AllList();
+void pop_back_AllList();
+void clear_AllList();
+void insert_AllList();
+void erase_AllList();
+#pragma endregion
 
 int addID_int;
 float addID_float;
@@ -80,7 +82,7 @@ int main()
 	}
 }
 
-inline void show_myListInfo() {
+void show_myListInfo() {
 	SetConsoleTextAttribute(hConsole, 12);
 	SetConsoleCursorPosition(hConsole, { 0,0 });
 	cout << "MY List" << endl;
@@ -110,7 +112,7 @@ inline void show_myListInfo() {
 	cout << "리스트 크기:" << ml_char.size();
 }
 
-inline void show_stlListInfo() {
+void show_stlListInfo() {
 	SetConsoleTextAttribute(hConsole, 11);
 	SetConsoleCursorPosition(hConsole, { 60,0 });
 	cout << "STL List" << endl;
@@ -140,7 +142,7 @@ inline void show_stlListInfo() {
 	cout << "리스트 크기:" << sl_char.size();
 }
 
-inline void push_front_AllList() {
+void push_front_AllList() {
 
 	cout << endl << "추가할 id입력" << endl;
 	cout << "|>>|";
@@ -157,7 +159,7 @@ inline void push_front_AllList() {
 	sl_char.push_front(addID_str);
 }
 
-inline void push_back_AllList() {
+void push_back_AllList() {
 
 	cout << endl << "추가할 id입력" << endl;
 	cout << "|>>|";
@@ -173,8 +175,8 @@ inline void push_back_AllList() {
 	sl_float.push_back(addID_float);
 	sl_char.push_back(addID_str);
 }
- 
-inline void pop_front_AllList() {
+
+void pop_front_AllList() {
 	ml_int.pop_front();
 	ml_float.pop_front();
 	ml_char.pop_front();
@@ -184,7 +186,7 @@ inline void pop_front_AllList() {
 	sl_char.pop_front();
 }
 
-inline void pop_back_AllList() {
+void pop_back_AllList() {
 	ml_int.pop_back();
 	ml_float.pop_back();
 	ml_char.pop_back();
@@ -194,7 +196,7 @@ inline void pop_back_AllList() {
 	sl_char.pop_back();
 }
 
-inline void clear_AllList() {
+void clear_AllList() {
 	ml_int.clear();
 	ml_float.clear();
 	ml_char.clear();
@@ -203,8 +205,8 @@ inline void clear_AllList() {
 	sl_float.clear();
 	sl_char.clear();
 }
- 
-inline void insert_AllList() {
+
+void insert_AllList() {
 
 	int insertIndex;
 	cout << endl << "추가할 id입력" << endl;
@@ -234,7 +236,7 @@ inline void insert_AllList() {
 	sl_char.insert(charListIter, addID_str);
 }
 
-inline void erase_AllList() {
+void erase_AllList() {
 
 	int eraseIndex;
 	cout << endl << "삭제할 위치" << endl;

@@ -1,20 +1,90 @@
-﻿// BinaryTree.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
-//
+﻿#include "BinaryTree.h"
+#include "BinaryTree.cpp"
 
-#include <iostream>
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+CONSOLE_CURSOR_INFO cusorInfo;
+
+MyBinaryTree<int> BinaryTree;
+
+template<typename T>
+void show_BinaryTree(TreeNode<T>* Node) {
+
+	if (Node == nullptr) return;
+
+	cout << Node->getData() << endl;
+
+	COORD LPos = { Pos.X + 1, Pos.Y + 1 };
+	show_BinaryTree(Node->getLeftChild());
+
+	COORD RPos = { Pos.X + 3, Pos.Y + 1 };
+	show_BinaryTree(Node->getRightChild());
+
+}
+
+void display() {
+	SetConsoleTextAttribute(hConsole, 12);
+	SetConsoleCursorPosition(hConsole, { 0,0 });
+	cout << "Current Tree" << endl;
+
+	COORD Pos = { 0,1 };
+	SetConsoleCursorPosition(hConsole, Pos);
+
+	show_BinaryTree(BinaryTree.getRootNode());
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	int num = 1;
+	int utilData;
+
+	while (num != 0) {
+		system("cls");
+
+		display();
+
+		SetConsoleTextAttribute(hConsole, 10);
+
+		SetConsoleCursorPosition(hConsole, { 0,9 });
+		cout << "1.노드 추가 || 2.노드 제거 || 3.노드 검색 || 4.전체 제거 || 0.종료" << endl;
+		cout << "|>>|";
+		cin >> num;
+
+		switch (num)
+		{
+		case 0:
+			num = 0;
+			break;
+		case 1:
+			cout << endl << "추가할 노드 값 입력" << endl;
+			cout << "|>>|";
+			cin >> utilData;
+			
+			BinaryTree.insert(utilData, BinaryTree.getRootNode());
+			break;
+		case 2:
+			cout << endl << "제거할 노드 값 입력" << endl;
+			cout << "|>>|";
+			cin >> utilData;
+
+			BinaryTree.remove(utilData, BinaryTree.getRootNode());
+
+			break;
+		case 3:
+			cout << endl << "검색할 값 입력--" << endl;
+			cout << "|>>|";
+			cin >> utilData;
+			
+			BinaryTree.Search(utilData, BinaryTree.getRootNode());
+
+			break;
+
+		case 4:
+
+			break;
+		}
+	}
+
+	system("PAUSE");
+
+	return 0;
 }
-
-// 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
-// 프로그램 디버그: <F5> 키 또는 [디버그] > [디버깅 시작] 메뉴
-
-// 시작을 위한 팁: 
-//   1. [솔루션 탐색기] 창을 사용하여 파일을 추가/관리합니다.
-//   2. [팀 탐색기] 창을 사용하여 소스 제어에 연결합니다.
-//   3. [출력] 창을 사용하여 빌드 출력 및 기타 메시지를 확인합니다.
-//   4. [오류 목록] 창을 사용하여 오류를 봅니다.
-//   5. [프로젝트] > [새 항목 추가]로 이동하여 새 코드 파일을 만들거나, [프로젝트] > [기존 항목 추가]로 이동하여 기존 코드 파일을 프로젝트에 추가합니다.
-//   6. 나중에 이 프로젝트를 다시 열려면 [파일] > [열기] > [프로젝트]로 이동하고 .sln 파일을 선택합니다.
