@@ -42,5 +42,16 @@ public:
 
 	TreeNode<T>* Search(T searchData, TreeNode<T>* Node);
 	void insert(T insertData, TreeNode<T>* Node);
-	void remove(T removeData, TreeNode<T>* Node);
+	TreeNode<T>* remove(T removeData, TreeNode<T>* Node);
+
+	TreeNode<T>* searchSubNode(TreeNode<T>* deleteNode, TreeNode<T>* Node) {
+		if (Node->getLeftChild() != nullptr) {
+			Node->setLeftChild(searchSubNode(deleteNode, Node->getLeftChild()));
+			return Node;
+		}
+		else {
+			deleteNode->setData(Node->getData());
+			return Node->getRightChild();
+		}
+	};
 };

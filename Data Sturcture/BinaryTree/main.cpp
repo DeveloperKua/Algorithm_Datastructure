@@ -7,17 +7,18 @@ CONSOLE_CURSOR_INFO cusorInfo;
 MyBinaryTree<int> BinaryTree;
 
 template<typename T>
-void show_BinaryTree(TreeNode<T>* Node) {
+void show_BinaryTree(TreeNode<T>* Node, COORD Pos) {
 
 	if (Node == nullptr) return;
+	SetConsoleCursorPosition(hConsole, Pos);
 
 	cout << Node->getData() << endl;
 
-	COORD LPos = { Pos.X + 1, Pos.Y + 1 };
-	show_BinaryTree(Node->getLeftChild());
+	COORD LPos = { Pos.X - 2, Pos.Y + 1 };
+	show_BinaryTree(Node->getLeftChild(), LPos);
 
-	COORD RPos = { Pos.X + 3, Pos.Y + 1 };
-	show_BinaryTree(Node->getRightChild());
+	COORD RPos = { Pos.X + 2, Pos.Y + 1 };
+	show_BinaryTree(Node->getRightChild(), RPos);
 
 }
 
@@ -26,10 +27,10 @@ void display() {
 	SetConsoleCursorPosition(hConsole, { 0,0 });
 	cout << "Current Tree" << endl;
 
-	COORD Pos = { 0,1 };
+	COORD Pos = { 13,1 };
 	SetConsoleCursorPosition(hConsole, Pos);
 
-	show_BinaryTree(BinaryTree.getRootNode());
+	show_BinaryTree(BinaryTree.getRootNode(), Pos);
 }
 
 int main()
@@ -70,7 +71,7 @@ int main()
 
 			break;
 		case 3:
-			cout << endl << "검색할 값 입력--" << endl;
+			cout << endl << "검색할 값 입력" << endl;
 			cout << "|>>|";
 			cin >> utilData;
 			
