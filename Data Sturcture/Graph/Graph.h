@@ -3,6 +3,9 @@
 #include <string>
 #include <iostream>
 #include <Windows.h>
+#include <algorithm>
+#include <utility>
+#include <set>
 
 using namespace std;
 
@@ -14,13 +17,12 @@ private:
 public:
 	unordered_map<string, int> neighbors;
 
+	myGraph();
 	myGraph(string NodeName);
 	~myGraph();
 
 public:
 	string getName();
-	myGraph getNeighbor();
-	int getWeigh();
 	void addNeighbor(string key, int value);
 
 };
