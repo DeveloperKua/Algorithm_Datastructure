@@ -1,5 +1,5 @@
 ﻿#include "Graph.h"
-unordered_map<string, pair<string, int>> DijkstraAlgorithm(myGraph start, vector<myGraph> other);
+unordered_map<string, pair<string, int>> DijkstraAlgorithm(myGraph start, vector<myGraph*> other);
 int main()
 {
 	myGraph seoul("seoul");
@@ -16,19 +16,23 @@ int main()
 	incheon.addNeighbor(chungju.getName(), 40);
 	incheon.addNeighbor(jeju.getName(), 140);
 
-	vector<myGraph> other{ busan, chungju, incheon, jeju };
+	vector<myGraph*> other{ &busan, &chungju, &incheon, &jeju };
 	
 	unordered_map<string, pair<string, int>> cheapestRoute = DijkstraAlgorithm(seoul, other);
+
+	cout << jeju.getName() <<"까지 최단 루트" << endl;
 }
 
-myGraph findGraph(vector<myGraph> other, string findValue) {
+myGraph * findGraph(vector<myGraph*> other, string findValue) {
 
-	for (myGraph node : other) {
-		if (node.getName() == findValue) return node;
+	for (myGraph * node : other) {
+		if (node->getName() == findValue) {
+			return node;
+		}
 	}
 }
 
-unordered_map<string, pair<string, int>> DijkstraAlgorithm(myGraph start, vector<myGraph> other) {
+unordered_map<string, pair<string, int>> DijkstraAlgorithm(myGraph start, vector<myGraph*> other) {
 
 	string temp = "none";
 	/*	
@@ -50,10 +54,10 @@ unordered_map<string, pair<string, int>> DijkstraAlgorithm(myGraph start, vector
 	//초기화 작업
 	cheapestRoute[start.getName()] = cheapestRoute_Info;
 
-	for(myGraph node : other)
+	for(myGraph * node : other)
 	{
-		cheapestRoute_Info = make_pair(node.getName(), INT32_MAX);
-		cheapestRoute[node.getName()] = cheapestRoute_Info;
+		cheapestRoute_Info = make_pair(node->getName(), INT32_MAX);
+		cheapestRoute[node->getName()] = cheapestRoute_Info;
 	}
 
 	//알고리즘 로직
@@ -83,7 +87,7 @@ unordered_map<string, pair<string, int>> DijkstraAlgorithm(myGraph start, vector
 
 			if (neighborCost < cheapestFromCurrent && visited.insert(node.first).second) {
 				cheapestFromCurrent = neighborCost;
-				current = &findGraph(other, node.first);
+				current = findGraph(other, node.first);
 			}
 		}
 	}
