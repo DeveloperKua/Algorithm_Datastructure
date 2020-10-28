@@ -70,10 +70,10 @@ unordered_map<string, pair<string, int>> DijkstraAlgorithm(myGraph start, vector
 			//현재 RouteCost가 가진 가중치보다 값이 작으면 RouteCost 갱신
 			neighborCost = cheapestRoute[node.first].second;
 
-			if (neighborCost > node.second + neighborCost) {
+			if (neighborCost > node.second + cheapestRoute[current->getName()].second) {
 				//neighborCost 초기화된 값이라면 재설정
 				if (neighborCost == INT32_MAX) neighborCost = 0;
-				cheapestRoute_Info = make_pair(current->getName(), node.second + neighborCost);
+				cheapestRoute_Info = make_pair(current->getName(), node.second + cheapestRoute[current->getName()].second);
 				cheapestRoute[node.first] = cheapestRoute_Info;
 			}
 		}
@@ -88,6 +88,7 @@ unordered_map<string, pair<string, int>> DijkstraAlgorithm(myGraph start, vector
 			if (neighborCost < cheapestFromCurrent && visited.insert(node.first).second) {
 				cheapestFromCurrent = neighborCost;
 				current = findGraph(other, node.first);
+				visited.erase(node.first);
 			}
 		}
 	}
