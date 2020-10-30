@@ -1,5 +1,5 @@
 ﻿#include "Graph.h"
-unordered_map<string, pair<string, int>> DijkstraAlgorithm(myGraph start, vector<myGraph*> other);
+void dijkstraAlgorithm(myGraph start, myGraph end, vector<myGraph*> other);
 int main()
 {
 	myGraph seoul("seoul");
@@ -8,19 +8,18 @@ int main()
 	myGraph incheon("incheon");
 	myGraph jeju("jeju");
 
-	seoul.addNeighbor(busan.getName(), 100);
-	seoul.addNeighbor(incheon.getName(), 160);
-	busan.addNeighbor(chungju.getName(), 120);
-	busan.addNeighbor(incheon.getName(), 180);
-	chungju.addNeighbor(jeju.getName(), 80);
-	incheon.addNeighbor(chungju.getName(), 40);
-	incheon.addNeighbor(jeju.getName(), 140);
+	seoul.addNeighbor(&busan, 100);
+	seoul.addNeighbor(&incheon, 160);
+	busan.addNeighbor(&chungju, 120);
+	busan.addNeighbor(&incheon, 180);
+	chungju.addNeighbor(&jeju, 80);
+	incheon.addNeighbor(&chungju, 40);
+	incheon.addNeighbor(&jeju, 140);
 
 	vector<myGraph*> other{ &busan, &chungju, &incheon, &jeju };
 	
-	unordered_map<string, pair<string, int>> cheapestRoute = DijkstraAlgorithm(seoul, other);
+	dijkstraAlgorithm(seoul, jeju,other);
 
-	cout << jeju.getName() <<"까지 최단 루트" << endl;
 }
 
 myGraph * findGraph(vector<myGraph*> other, string findValue) {
@@ -32,9 +31,8 @@ myGraph * findGraph(vector<myGraph*> other, string findValue) {
 	}
 }
 
-unordered_map<string, pair<string, int>> DijkstraAlgorithm(myGraph start, vector<myGraph*> other) {
+void dijkstraAlgorithm(myGraph start, myGraph end, vector<myGraph*> other) {
 
-	string temp = "none";
 	/*	
 	가장 싼 루트를 저장할 해시 해시의 key는 노드의 이름
 	해시의 value는 pair를 통해 2가지 정보를 기입 
@@ -42,9 +40,43 @@ unordered_map<string, pair<string, int>> DijkstraAlgorithm(myGraph start, vector
 	secont - 싼 루트 가중치
 	*/
 	unordered_map<string, pair<string, int>> cheapestRoute;
+	priority_queue<pair<myGraph*, int>> pQueue; //우선순위 큐
+	
+	myGraph * current;
+
+	//초기화 작업
+	cheapestRoute[start.getName()] = make_pair(start.getName(), 0);
+	pQueue.push(make_pair(&start, 0));
+	for(myGraph * node : other) cheapestRoute[node->getName()] = make_pair(node->getName(), INT32_MAX);
+
+	//알고리즘 로직
+	while (!pQueue.empty()) {
+		current = pQueue.top().first;
+		int currentCost = -pQueue.top().second;
+
+		pQueue.pop();
+		//현재 노드의 neighbor 모두 탐색
+		for (pair<myGraph*, int> curNeighbor : current->neighbors) {
+			//지금 탐색중인 현재 노드의 이웃의 cheapestRoute가 가진 값
+			int cur_routeCost = cheapestRoute[curNeighbor.first->getName()].second;
+			int newCost = curNeighbor.second + currentCost;
+			//현재 노드에서 다른 노드로 향하는 간선의 가중치가 현재 RouteCost가 가진 가중치보다 값이 작으면 RouteCost 갱신
+			if (cur_routeCost > newCost) {
+				cheapestRoute[curNeighbor.first->getName()] = make_pair(current->getName(), newCost);
+				pQueue.push(make_pair(curNeighbor.first, -newCost));
+			}
+		}
+	}
+
+	cout << " d";
+}
+
+/*unordered_map<string, pair<string, int>> dijkstraAlgorithm(myGraph start, myGraph end, vector<myGraph*> other) {
+
+	unordered_map<string, pair<string, int>> cheapestRoute;
 	//cheapestRoute 값 대입 편의성을 위한 변수
 	pair<string, int> cheapestRoute_Info = make_pair(start.getName(), 0);
-	
+
 	//set 컨테이너로 이미 방문 하였는지를 확인 set은 중복을 포함하지 않기에
 	set<string> visited;
 	myGraph * current = &start;
@@ -54,7 +86,7 @@ unordered_map<string, pair<string, int>> DijkstraAlgorithm(myGraph start, vector
 	//초기화 작업
 	cheapestRoute[start.getName()] = cheapestRoute_Info;
 
-	for(myGraph * node : other)
+	for (myGraph * node : other)
 	{
 		cheapestRoute_Info = make_pair(node->getName(), INT32_MAX);
 		cheapestRoute[node->getName()] = cheapestRoute_Info;
@@ -82,7 +114,7 @@ unordered_map<string, pair<string, int>> DijkstraAlgorithm(myGraph start, vector
 		int cheapestFromCurrent = INT32_MAX;
 		//다음으로 탐색할 노드 찾기
 		for (pair<string, pair<string, int>> node : cheapestRoute) {
-			
+
 			neighborCost = node.second.second;
 
 			if (neighborCost < cheapestFromCurrent && visited.insert(node.first).second) {
@@ -94,4 +126,4 @@ unordered_map<string, pair<string, int>> DijkstraAlgorithm(myGraph start, vector
 	}
 
 	return cheapestRoute;
-}
+}*/

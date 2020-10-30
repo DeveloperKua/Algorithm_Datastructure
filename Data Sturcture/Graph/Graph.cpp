@@ -14,7 +14,7 @@ string myGraph::getName()
 	return dataName;
 }
 
-void myGraph::addNeighbor(string key, int value)
+void myGraph::addNeighbor(myGraph* key, int value)
 {
 	neighbors.insert(make_pair(key, value));
 }
