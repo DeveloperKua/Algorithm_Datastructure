@@ -131,7 +131,6 @@ void cMaze::MazeGenerator_SideWinder()
 		visitedCellCount++;
 	}
 	this->Render();
-	Sleep(0);
 
 }
 
@@ -165,6 +164,13 @@ void cMaze::MazeGenerator_RecursiveBacktracking()
 	}
 	this->Render();
 	curTile->drawCurrentTileRect();
+
+}
+
+void cMaze::Astar()
+{
+	bool *isVisited = new bool[mMazeHeight * mMazeWidth];
+
 
 }
 

@@ -33,6 +33,7 @@ char addID_str;
 
 int main()
 {
+	sl_int.reverse();
 	int num = 1;
 	
 	while (num != 0) {

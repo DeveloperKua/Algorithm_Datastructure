@@ -108,6 +108,7 @@ public:
 	void MazeGenerator_BinaryTree();
 	void MazeGenerator_SideWinder();
 	void MazeGenerator_RecursiveBacktracking();
+	void Astar();
 
 	cTile * checkNeighborTiles(const cTile curTile) {
 		//현재 타일 위치
